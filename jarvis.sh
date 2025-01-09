@@ -220,3 +220,43 @@ cleanup_ssh() {
     log_success "SSH cleanup complete"
 }
 
+set_wallpaper() {
+
+        # Configuration
+        DEST_FOLDER="$HOME/Pictures"
+        FILENAME="wallpaper.jpg"
+        WALLPAPER_PATH="$DEST_FOLDER/$FILENAME"
+
+        # Create wallpapers directory if it doesn't exist
+        mkdir -p "$DEST_FOLDER"
+
+        # Download the image with optimized curl command
+        echo "Downloading wallpaper..."
+        if curl -L \
+            -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chr>
+            -H "Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8" \
+            -H "Referer: https://uhdpaper.com/" \
+            --compressed \
+            -o "$WALLPAPER_PATH" \
+            "$IMAGE_URL"; then
+
+            # Verify the download was successful
+            if [ -f "$WALLPAPER_PATH" ] && [ -s "$WALLPAPER_PATH" ]; then
+                echo "Download completed successfully"
+
+                # Set the wallpaper for both light and dark themes
+                gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER_>
+                gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLP>
+                gsettings set org.gnome.desktop.background picture-options 'scaled'
+
+                echo "✓ Wallpaper has been set successfully!"
+                echo "Location: $WALLPAPER_PATH"
+            else
+                echo "❌ Error: Download failed or file is empty"
+                exit 1
+            fi
+        else
+            echo "❌ Error: Failed to download the image"
+            exit 1
+        fi
+}
