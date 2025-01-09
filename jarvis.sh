@@ -193,7 +193,7 @@ setup_ssh() {
     local SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
     
     # Generate SSH key
-    ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || log_error "Failed>
+    ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || log_error "Failed to generate SSH key"
     
     # Start SSH agent and add key
     eval "$(ssh-agent -s)"
