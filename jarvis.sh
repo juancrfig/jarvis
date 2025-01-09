@@ -174,3 +174,49 @@ cleanup_browsers() {
 
     echo "Browser data deletion complete."
 }
+
+# Helper function for error handling
+log_error() {
+    echo "ERROR: $1" >&2
+    exit 1
+}
+
+# Helper function for success messages
+log_success() {
+    echo "SUCCESS: $1"
+}
+
+
+# Function to handle SSH setup
+setup_ssh() {
+    
+    local SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
+    
+    # Generate SSH key
+    ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || log_error "Failed>
+    
+    # Start SSH agent and add key
+    eval "$(ssh-agent -s)"
+    ssh-add "$SSH_KEY_PATH" || log_error "Failed to add SSH key to agent"
+    
+    # Display public key
+    echo -e "\nAdd this public key to GitHub (https://github.com/settings/keys):"
+    cat "${SSH_KEY_PATH}.pub"
+    
+    # Wait for user confirmation
+    read -p "Press [Enter] after adding the key to GitHub..."
+    
+    # Clone repository
+    echo "Cloning repository..."
+    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_erro>
+    log_success "SSH setup and repository clone complete"
+}
+
+# Function to clean SSH
+cleanup_ssh() {
+    echo "Cleaning up SSH..."
+    ssh-add -d "$HOME/.ssh/id_ed25519" 2>/dev/null
+    rm -f "$HOME/.ssh/id_ed25519" "$HOME/.ssh/id_ed25519.pub" 2>/dev/null
+    log_success "SSH cleanup complete"
+}
+
