@@ -85,3 +85,32 @@ configure_git() {
     git config --global core.abbrev 10
     log_success "Git configuration complete"
 }
+
+# Funcion para limpiar VS Code
+cleanup_vscode() {
+
+        # Kill VS Code processes
+        pkill -f "code" 2>/dev/null
+
+        # Force kill if still running
+        if pgrep -f "code" > /dev/null; then
+                pkill -9 -f "code"
+        fi
+
+    echo "Cleaning VS Code data..."
+    local vscode_paths=(
+        "$HOME/.config/Code"
+        "$HOME/.vscode"
+        "$HOME/.config/Code - OSS"
+        "$HOME/.local/share/code"
+        "$HOME/.local/share/code-oss"
+        "$HOME/.cache/code"
+        "$HOME/.cache/code-oss"
+        "$HOME/.vscode/extensions"
+    )
+    
+    for path in "${vscode_paths[@]}"; do
+        rm -rf "$path" 2>/dev/null
+    done
+    log_success "VS Code cleanup complete"
+}
