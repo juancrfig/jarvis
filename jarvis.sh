@@ -114,3 +114,63 @@ cleanup_vscode() {
     done
     log_success "VS Code cleanup complete"
 }
+
+cleanup_browsers() {
+
+    # Ensure both browsers are completely closed
+    pkill -f firefox
+    pkill -f chrome
+    pkill -f chromium
+    sleep 2
+
+    # Paths for Firefox cleanup
+    firefox_paths=(
+        "$HOME/.mozilla/firefox"
+        "$HOME/.cache/mozilla/firefox"
+        "$HOME/.config/firefox"
+        "$HOME/.local/share/firefox"
+        "$HOME/.local/share/mozilla"
+        "$HOME/.local/state/mozilla"
+        "$HOME/.mozilla/firefox/*.default*"
+        "$HOME/.mozilla/firefox/*.default-release*"
+        "$HOME/.mozilla/firefox/profiles.ini"
+        "$HOME/snap/firefox"
+        "$HOME/snap/firefox/common/.mozilla"
+        "$HOME/snap/firefox/common/.cache/mozilla"
+        "$HOME/.var/app/org.mozilla.firefox"
+        "$HOME/.var/app/org.mozilla.firefox/.mozilla"
+        "$HOME/.var/app/org.mozilla.firefox/.cache"
+        "$HOME/.mozilla/firefox/*default*/logins.json"
+        "$HOME/.mozilla/firefox/*default*/key*.db"
+        "$HOME/.mozilla/firefox/*default*/cookies.sqlite"
+    )
+
+    # Paths for Google Chrome cleanup
+    chrome_paths=(
+        "$HOME/.config/google-chrome"
+        "$HOME/.cache/google-chrome"
+        "$HOME/.local/share/google-chrome"
+        "$HOME/.local/state/google-chrome"
+        "$HOME/snap/chromium"
+        "$HOME/snap/chromium/common/.cache"
+        "$HOME/snap/chromium/common/.config"
+        "$HOME/.var/app/com.google.Chrome"
+        "$HOME/.var/app/com.google.Chrome/.cache"
+        "$HOME/.var/app/com.google.Chrome/.config"
+        "$HOME/.config/chromium"
+        "$HOME/.cache/chromium"
+        "$HOME/.local/share/chromium"
+        "$HOME/.local/state/chromium"
+    )
+
+    # Combine paths for cleanup
+    all_paths=("${firefox_paths[@]}" "${chrome_paths[@]}")
+
+    # Remove all browser-related files
+    for path in "${all_paths[@]}"; do
+        # Use find to handle wildcards and remove files/directories
+        find "${path%/*}" -path "$path" -prune -exec rm -rf {} + 2>/dev/null
+    done
+
+    echo "Browser data deletion complete."
+}
