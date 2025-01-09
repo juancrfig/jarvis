@@ -287,3 +287,28 @@ cleanup_folder() {
 
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
+
+obsidian() {
+
+    # Define the URL and destination folder
+    URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian>
+    DESTINATION="$HOME/Descargas"
+
+    # File name to save as
+    FILENAME="Obsidian.AppImage"
+
+    # Change to the destination directory
+    cd "$DESTINATION" || exit 1
+
+    # Download the file
+    echo "Downloading Obsidian..."
+    curl -L "$URL" -o "$FILENAME" || { echo "Download failed!"; exit 1; }
+
+    # Make the file executable
+    chmod +x "$FILENAME"
+    ./"$FILENAME" --appimage-extract
+    rm "$FILENAME"
+    cd squashfs-root
+    ./obsidian
+
+}
