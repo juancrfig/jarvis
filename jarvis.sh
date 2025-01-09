@@ -312,3 +312,50 @@ obsidian() {
     ./obsidian
 
 }
+
+
+# Main script execution
+case "$1" in
+    "hello")
+
+        cleanup_folder
+        #set_wallpaper    # La funcionalidad del wallpaper esta desactivada hasta que se logre colocar el mismo fondo que Campuslands tenia preconfigurado en el computador
+        customize_terminal
+        cleanup_vscode
+        xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default brows>
+        configure_git
+        setup_ssh
+        log_success "Protocolo de bievenida completado exitosamente"
+        ;;
+
+    "obsidian")
+        obsidian
+        ;;
+
+    "bye")
+        cleanup_ssh
+        cleanup_discord
+        cleanup_vscode
+        cleanup_browsers
+        cleanup_folder
+
+        rm ~/.gitconfig
+        touch ~/.gitconfig
+
+        # Clear terminal history
+        history -c && history -w
+
+        log_success "Protocolo de despedida completado exitosamente"
+        sleep 10 && shutdown now
+        self_delete
+        ;;
+
+    *)
+        echo "Usage: $0 {hello|obsidian|bye}"
+        echo "  hello  - Initial setup (VS Code cleanup, Git config, Firefox default)"
+	echo "  obsidian  -  Download Obsidian app, then open it"
+        echo "  bye  - Cleanup all data and configurations"
+        exit 1
+        ;;
+esac
+
