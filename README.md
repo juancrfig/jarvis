@@ -1,6 +1,8 @@
 # Jarvis
 
-<img src="img/jarvis_logo_resized.png" alt="Logo" width="450">
+<div align="center">
+  <img src="img/jarvis_logo_resized.png" alt="Logo" width="300">
+</div>
 
 Jarvis es un asistente de la terminal cuyo propósito es evitar procesos 
 repetitivos en los computadores de Campuslands.
