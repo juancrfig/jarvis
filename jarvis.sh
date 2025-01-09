@@ -260,3 +260,30 @@ set_wallpaper() {
             exit 1
         fi
 }
+
+
+# Function to delete the script itself
+self_delete() {
+    echo "Deleting the script..."
+    
+    # Save the path to the script
+    local script_path="$0"
+    
+    # Schedule the deletion after all processes finish
+    rm -f "$script_path" && log_success "Script deleted successfully"
+}
+
+cleanup_folder() {
+    
+    script_path="/home/camper/Descargas/jarvis.sh"
+    script_dir=$(dirname "$script_path")
+    script_name=$(basename "$script_path")
+
+    # Change to the script's directory
+    cd "$script_dir" || exit 1
+
+    # Delete everything except the script itself
+    find . -mindepth 1 ! -name "$script_name" -exec rm -rf {} +
+
+    echo "All files and folders in $script_dir except $script_name have been deleted."
+}
