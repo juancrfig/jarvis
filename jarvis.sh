@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Variables Globales
-GITHUB_EMAIL=""
-GITHUB_USERNAME=""
-GITHUB_REPO=""                        
-IMAGE_URL=""
+GITHUB_EMAIL=""                      # Ingresa tu email de GitHub
+GITHUB_USERNAME=""                   # Ingresa tu usuario de GitHub
+GITHUB_REPO=""                       # El link SSH de un repositorio que quieras clonar por defecto
+IMAGE_URL=""                         # El URL de la imagen para colocar como fondo
 
 # Variables para personalizar la terminal
 BACKGROUND_COLOR="rgb(0,0,0)"        # Ingresa el color de fondo que quieres para tu terminal
@@ -71,4 +71,17 @@ customize_terminal() {
     source ~/.bashrc
 	reset
     echo "Terminal customization applied!"
+}
+
+# Funcion para configurar Git
+configure_git() {
+    git config --global user.name "$GITHUB_USERNAME"
+    git config --global user.email "$GITHUB_EMAIL"
+    git config --global core.editor "code --wait"
+    git config --global init.defaultBranch main
+    git config --global color.ui auto
+    git config --global pull.rebase false
+    git config --global core.autocrlf input
+    git config --global core.abbrev 10
+    log_success "Git configuration complete"
 }

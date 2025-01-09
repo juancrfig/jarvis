@@ -10,7 +10,7 @@ repetitivos en los computadores de Campuslands.
 - Sincronizar GitHub mediante una llave SSH.
 - Mejorar la estética de la terminal.
 - Cambiar el fondo del computador.
-- Descargar e iniciar la aplicación Obsidian (*util para hacer apuntes con archivos Markdown*).
+- Descargar e iniciar la aplicación Obsidian (*util para hacer apuntes en archivos Markdown*).
 - Limpiar automaticamente todos los archivos, sesiones y todo rastro del usuario. 
 - Apagar automaticante el computador.
 
