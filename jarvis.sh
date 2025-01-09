@@ -208,7 +208,7 @@ setup_ssh() {
     
     # Clone repository
     echo "Cloning repository..."
-    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_erro>
+    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
     log_success "SSH setup and repository clone complete"
 }
 
