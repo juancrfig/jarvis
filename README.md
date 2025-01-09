@@ -21,7 +21,8 @@ repetitivos en los computadores de Campuslands.
 ### ¿Cómo se usa?
 
 - Al descargar Jarvis verás en las primeras lineas del codigo variables globales
-![primer_ejemplo](img/ejemplo_variables_globales.png)
+![primer_ejemplo](img/variables_ejemplo.png)
+
 La idea es que llenes estas variables con la información que piden, así Jarvis se adaptará a tu gusto.
 - Darle permisos de ejecución a Jarvis mediante el comando ```chmod +x jarvis```
 - Jarvis tiene **3 protocolos**:
