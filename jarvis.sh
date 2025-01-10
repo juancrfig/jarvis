@@ -233,7 +233,7 @@ set_wallpaper() {
         # Download the image with optimized curl command
         echo "Downloading wallpaper..."
         if curl -L \
-            -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chr>
+            -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
             -H "Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8" \
             -H "Referer: https://uhdpaper.com/" \
             --compressed \
@@ -245,8 +245,8 @@ set_wallpaper() {
                 echo "Download completed successfully"
 
                 # Set the wallpaper for both light and dark themes
-                gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER_>
-                gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLP>
+                gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER"
+                gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER_PATH"
                 gsettings set org.gnome.desktop.background picture-options 'scaled'
 
                 echo "✓ Wallpaper has been set successfully!"
@@ -291,7 +291,7 @@ cleanup_folder() {
 obsidian() {
 
     # Define the URL and destination folder
-    URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian>
+    URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian-1.7.7-arm64.AppImage"
     DESTINATION="$HOME/Descargas"
 
     # File name to save as
@@ -322,7 +322,7 @@ case "$1" in
         #set_wallpaper    # La funcionalidad del wallpaper esta desactivada hasta que se logre colocar el mismo fondo que Campuslands tenia preconfigurado en el computador
         customize_terminal
         cleanup_vscode
-        xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default brows>
+        xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser"
         configure_git
         setup_ssh
         log_success "Protocolo de bievenida completado exitosamente"
