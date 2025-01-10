@@ -9,7 +9,7 @@ IMAGE_URL=""                         # El URL de la imagen para colocar como fon
 # Variables para personalizar la terminal
 BACKGROUND_COLOR="rgb(0,0,0)"        # Ingresa el color de fondo que quieres para tu terminal
 BACKGROUND_TRANSPARENCY_PERCENT=15   # Ingresa el porcentaje de transparencia para el fondo de la terminal
-FONT=""                              # Ingresa el estilo de letra
+FONT="Monospace 12"                              # Ingresa el estilo de letra
 FOREGROUND_COLOR="rgb(255,255,255)"  # Ingresa el color de la letra
 
 
@@ -36,7 +36,7 @@ customize_terminal() {
     # Font settings
     gsettings set $PROFILE_PATH use-system-font false
     gsettings set $PROFILE_PATH font "$FONT"
-    gsettings set $PROFILE_PATH foreground-color "$FOREGROUND_COLOR"U    # Get default profile ID
+    gsettings set $PROFILE_PATH foreground-color "$FOREGROUND_COLOR"    # Get default profile ID
     
     # File and directory colors (creates or modifies .bashrc entries)
     if ! grep -q 'Custom colors for files and directories' ~/.bashrc; then
@@ -291,7 +291,7 @@ cleanup_folder() {
 obsidian() {
 
     # Define the URL and destination folder
-    URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian-1.7.7-arm64.AppImage"
+    URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian-1.7.7.AppImage"
     DESTINATION="$HOME/Descargas"
 
     # File name to save as
@@ -308,7 +308,8 @@ obsidian() {
     chmod +x "$FILENAME"
     ./"$FILENAME" --appimage-extract
     rm "$FILENAME"
-    cd squashfs-root
+    mv squashfs-root obsidian-folder
+    cd obsidian-folder
     ./obsidian
 
 }
