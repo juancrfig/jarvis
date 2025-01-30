@@ -314,6 +314,26 @@ obsidian() {
 
 }
 
+setup_nvm() {
+    # Install nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+    # Set up NVM_DIR environment variable
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+
+    # Load nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+    # Check nvm version
+    nvm --version
+    nvm -v
+
+    # Install the latest version of Node.js
+    nvm install node
+
+    echo "nvm and Node.js have been successfully installed and configured."
+}
+
 
 # Main script execution
 case "$1" in
@@ -326,6 +346,7 @@ case "$1" in
         xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser"
         configure_git
         setup_ssh
+        setup_nvm
         log_success "Protocolo de bievenida completado exitosamente"
         ;;
 
