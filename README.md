@@ -12,7 +12,8 @@ repetitivos en los computadores de Campuslands.
 - Limpiar archivos que dejaron anteriores usarios en el computador.
 - Elegir automaticamente un navegador como predeterminado, basado en la elección previa del usuario.
 - Sincronizar GitHub mediante una llave SSH.
-- Mejorar la estética de la terminal.
+- Instala Node.js
+- Modifica la estética de la terminal a tu gusto.
 - Cambiar el fondo del computador.
 - Descargar e iniciar la aplicación Obsidian (*util para hacer apuntes en archivos Markdown*).
 - Limpiar automaticamente todos los archivos, sesiones y todo rastro del usuario. 
@@ -31,14 +32,15 @@ La idea es que llenes estas variables con la información que piden, así Jarvis
 
     Lo activas mediante ```./jarvis.sh hello```
     Este protocolo se encarga de:
-        
+
        - Limpia la carpeta de descargas.
-       - Coloca el fondo que elegiste (*funcionalidad aún en desarrollo*)
+       - Coloca el fondo que elegiste.
        - Personaliza la terminal.
        - Limpia VS Code, así no apareceran extensiones y/o comandos predefinidos de usarios anteriores.
        - Coloca como navegador predeterminado a Google Chrome.
        - Modifica el archivo ```~/.gitconfig``` con tus datos. 
        - Conecta mediante una llave SSH el computador con tu cuenta de GitHub, para poder usar Git sin tener que ingresar tu contraseña en cada push.
+       - Instala Node.js
 
 
 2. ***Protocolo Obsidian*** 
