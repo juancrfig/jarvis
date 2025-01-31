@@ -13,9 +13,8 @@ FONT="Monospace 12"                              # Ingresa el estilo de letra
 FOREGROUND_COLOR="rgb(255,255,255)"  # Ingresa el color de la letra
 
 
-# Función para personalizar la terminal
+# Function to personalize the terminal
 customize_terminal() {
-
     PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
     PROFILE_PATH="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/"
 
@@ -36,40 +35,40 @@ customize_terminal() {
     # Font settings
     gsettings set $PROFILE_PATH use-system-font false
     gsettings set $PROFILE_PATH font "$FONT"
-    gsettings set $PROFILE_PATH foreground-color "$FOREGROUND_COLOR"    # Get default profile ID
+    gsettings set $PROFILE_PATH foreground-color "$FOREGROUND_COLOR"
     
-    # File and directory colors (creates or modifies .bashrc entries)
+    # File and directory colors
     if ! grep -q 'Custom colors for files and directories' ~/.bashrc; then
-        echo '
-		# Custom colors for files and directories
-		LS_COLORS="di=1;34:ln=1;36:ex=1;32:*.jpg=1;35:*.png=1;35:*.txt=0;37"
-		export LS_COLORS
+        cat >> ~/.bashrc << 'EOF'
+# Custom colors for files and directories
+LS_COLORS="di=1;34:ln=1;36:ex=1;32:*.jpg=1;35:*.png=1;35:*.txt=0;37"
+export LS_COLORS
 
-		# Enable color support
-		alias ls="ls --color=auto"
-		alias dir="dir --color=auto"
-		alias grep="grep --color=auto"
-		' >> ~/.bashrc
+# Enable color support
+alias ls="ls --color=auto"
+alias dir="dir --color=auto"
+alias grep="grep --color=auto"
+EOF
     fi
 
     # Add custom prompt colors
     if ! grep -q 'Custom colored prompt' ~/.bashrc; then
-        echo '
-		# Custom colored prompt
-		RED='\''\[\033[0;31m\]'\''
-		GREEN='\''\[\033[0;32m\]'\''
-		YELLOW='\''\[\033[0;33m\]'\''
-		BLUE='\''\[\033[0;34m\]'\''
-		PURPLE='\''\[\033[0;35m\]'\''
-		CYAN='\''\[\033[0;36m\]'\''
-		RESET='\''\[\033[0m\]'\''
-		PS1="${GREEN}\u${RESET}@${BLUE}\h${RESET}:${PURPLE}\w${RESET}\$ "
-		' >> ~/.bashrc
+        cat >> ~/.bashrc << 'EOF'
+# Custom colored prompt
+RED='\[\033[0;31m\]'
+GREEN='\[\033[0;32m\]'
+YELLOW='\[\033[0;33m\]'
+BLUE='\[\033[0;34m\]'
+PURPLE='\[\033[0;35m\]'
+CYAN='\[\033[0;36m\]'
+RESET='\[\033[0m\]'
+PS1="${GREEN}\u${RESET}@${BLUE}\h${RESET}:${PURPLE}\w${RESET}\$ "
+EOF
     fi
 
     # Apply changes
     source ~/.bashrc
-	reset
+    reset
     echo "Terminal customization applied!"
 }
 
@@ -340,7 +339,7 @@ case "$1" in
     "hello")
 
         cleanup_folder
-        #set_wallpaper    # La funcionalidad del wallpaper esta desactivada hasta que se logre colocar el mismo fondo que Campuslands tenia preconfigurado en el computador
+        set_wallpaper
         customize_terminal
         cleanup_vscode
         xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser"
