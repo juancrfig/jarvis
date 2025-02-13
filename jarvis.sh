@@ -333,6 +333,13 @@ setup_nvm() {
     echo "nvm and Node.js have been successfully installed and configured."
 }
 
+reviewer() {
+
+    pip install selenium &> /dev/null
+    echo "Selenium installed!"
+
+}
+
 
 # Main script execution
 case "$1" in
@@ -370,6 +377,10 @@ case "$1" in
         sleep 10 && shutdown now
         self_delete
         ;;
+
+    "review")
+	reviewer
+	;;
 
     *)
         echo "Usage: $0 {hello|obsidian|bye}"
