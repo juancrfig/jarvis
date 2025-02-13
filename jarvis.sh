@@ -336,7 +336,8 @@ setup_nvm() {
 reviewer() {
 
     pip install selenium &> /dev/null
-    echo "Selenium installed!"
+    pip install undetected-chromedriver &> /dev/null
+    echo "Selenium and Chrome Driver installed!"
 
 }
 
