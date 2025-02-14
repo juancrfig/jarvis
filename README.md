@@ -9,6 +9,7 @@ repetitivos en los computadores de Campuslands.
 
 ## Funcionalidades
 
+- Califica automáticamente las clases de Software skills y Ser.
 - Limpiar archivos que dejaron anteriores usarios en el computador.
 - Elegir automaticamente un navegador como predeterminado, basado en la elección previa del usuario.
 - Sincronizar GitHub mediante una llave SSH.
@@ -50,8 +51,15 @@ La idea es que llenes estas variables con la información que piden, así Jarvis
 
        - Descargar la aplicación Obsidian y abrirla automáticamente.
 
+3. ***Jarvis Happy Mode***
 
-3. ***Protocolo de despedida***
+    Lo activas mediante ```./jarvis.sh happy```
+    Este protocolo se encarga de:
+
+       - Califica las clases de Software Skills y Ser con caritas felices por defecto.
+
+
+4. ***Protocolo de despedida***
 
     Lo activas mediante ```./jarvis bye```
     Este protocolo se encarga de:
