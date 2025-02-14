@@ -354,6 +354,7 @@ case "$1" in
         configure_git
         setup_ssh
         setup_nvm
+	reviewer
         log_success "Protocolo de bievenida completado exitosamente"
         ;;
 
@@ -380,7 +381,7 @@ case "$1" in
         ;;
 
     "review")
-	reviewer
+	echo "XD"
 	;;
 
     *)

@@ -56,52 +56,54 @@ try:
     # Wait for the next page to load
     time.sleep(5)
 
-    # Check for buttons with the given classes
-    buttons = driver.find_elements(By.CLASS_NAME, "btn-secondary-short.f-12.hf-24px.wf-76px")
+    while True:  # Main loop that continues until no more buttons are found
+        # Check for buttons with the given classes
+        buttons = driver.find_elements(By.CLASS_NAME, "btn-secondary-short.f-12.hf-24px.wf-76px")
 
-    if buttons:
-        print("Button found! Clicking the first one...")
+        if not buttons:
+            print("No more buttons found. Process complete!")
+            break
+
+        print(f"Found {len(buttons)} buttons. Processing the first one...")
         buttons[0].click()
-    else:
-        print("No button found with the specified classes.")
 
-    print("Button click process completed!")
+        # Wait for the next page to load
+        time.sleep(5)
 
-    # Wait for the next page to load
-    time.sleep(5)
+        try:
+            # Find all elements that have at least the specified classes
+            elements = driver.find_elements(By.CSS_SELECTOR, ".transition-all.ease-linear.duration-150.icon-happy-outline")
 
-    try:
-        # Find all elements that have at least the specified classes
-        elements = driver.find_elements(By.CSS_SELECTOR, ".transition-all.ease-linear.duration-150.icon-happy-outline")
+            if elements:
+                print(f"Found {len(elements)} elements with the specified classes. Clicking each one...")
+                for element in elements:
+                    element.click()
+                    time.sleep(0.5)  # Small delay between clicks
+            else:
+                print("No elements found with the specified classes.")
+        except Exception as e:
+            print(f"Error finding or clicking elements: {e}")
 
-        if elements:
-            print(f"Found {len(elements)} elements with the specified classes. Clicking each one...")
-            for element in elements:
-                element.click()
-                time.sleep(0.5)  # Small delay between clicks
-        else:
-            print("No elements found with the specified classes.")
-    except Exception as e:
-        print(f"Error finding or clicking elements: {e}")
-
-    # Click the final button to proceed
-    try:
-        next_button = driver.find_element(By.CSS_SELECTOR, ".btn-medium.w-fit.mt-14")
-        if next_button:
-            print("Next button found! Clicking it...")
-            next_button.click()
-        else:
-            print("No next button found!")
-    except Exception as e:
-        print(f"Error finding or clicking the next button: {e}")
-
-    print("Process completed successfully!")
+        # Click the final button to proceed
+        try:
+            next_button = driver.find_element(By.CSS_SELECTOR, ".btn-medium.w-fit.mt-14")
+            if next_button:
+                print("Next button found! Clicking it...")
+                next_button.click()
+                # Wait for the page to load back
+                time.sleep(5)
+            else:
+                print("No next button found!")
+                break
+        except Exception as e:
+            print(f"Error finding or clicking the next button: {e}")
+            break
 
 except Exception as e:
     print(f"Error: {e}")
 
 # Keep browser open for testing
-time.sleep(100)
+time.sleep(500)
 
 # Remove or comment out the following line to keep the browser open
 # driver.quit()
