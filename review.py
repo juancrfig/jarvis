@@ -78,7 +78,7 @@ try:
                 print(f"Found {len(elements)} elements with the specified classes. Clicking each one...")
                 for element in elements:
                     element.click()
-                    time.sleep(0.5)  # Small delay between clicks
+                    time.sleep(0.25)  # Small delay between clicks
             else:
                 print("No elements found with the specified classes.")
         except Exception as e:
@@ -101,6 +101,89 @@ try:
 
 except Exception as e:
     print(f"Error: {e}")
+
+# Go back to the skills page
+driver.get("https://camper.campuslands.com/skills")
+
+# Wait for the page to load
+time.sleep(5)
+
+# Find the div with classes 'd-middle gap-x-3' and click the last child div
+try:
+    parent_div = driver.find_element(By.CLASS_NAME, "d-middle.gap-x-3")
+    # Find all child divs inside the parent_div
+    child_divs = parent_div.find_elements(By.TAG_NAME, "div")  # Use TAG_NAME to find all child divs
+    if child_divs:
+        last_child_div = child_divs[-1]  # Get the last child div
+        last_child_div.click()
+        print("Clicked the last child div in 'd-middle gap-x-3'.")
+    else:
+        print("No child divs found in 'd-middle gap-x-3'.")
+except Exception as e:
+    print(f"Error finding or clicking the last child div: {e}")
+
+# Wait for the page to load
+time.sleep(5)
+
+# Find the parent div with classes 'el-scrollbar__view' and click the last child div
+try:
+    parent_div = driver.find_element(By.CLASS_NAME, "el-scrollbar__view")
+    child_divs = parent_div.find_elements(By.CLASS_NAME, "d-middle.w-full.gap-x-5")
+    if child_divs:
+        last_child_div = child_divs[-1]
+        last_child_div.click()
+        print("Clicked the last child div in 'el-scrollbar__view'.")
+    else:
+        print("No child divs found in 'el-scrollbar__view'.")
+except Exception as e:
+    print(f"Error finding or clicking the last child div: {e}")
+
+# Wait for the page to load
+time.sleep(5)
+
+# Repeat the While True loop process
+while True:  # Main loop that continues until no more buttons are found
+    # Check for buttons with the given classes
+    buttons = driver.find_elements(By.CLASS_NAME, "btn-secondary-short.f-12.hf-24px.wf-76px")
+
+    if not buttons:
+        print("No more buttons found. Process complete!")
+        break
+
+    print(f"Found {len(buttons)} buttons. Processing the first one...")
+    buttons[0].click()
+
+    # Wait for the next page to load
+    time.sleep(5)
+
+    try:
+        # Find all elements that have at least the specified classes
+        elements = driver.find_elements(By.CSS_SELECTOR, ".transition-all.ease-linear.duration-150.icon-happy-outline")
+
+        if elements:
+            print(f"Found {len(elements)} elements with the specified classes. Clicking each one...")
+            for element in elements:
+                element.click()
+                time.sleep(0.25)  # Small delay between clicks
+        else:
+            print("No elements found with the specified classes.")
+    except Exception as e:
+        print(f"Error finding or clicking elements: {e}")
+
+    # Click the final button to proceed
+    try:
+        next_button = driver.find_element(By.CSS_SELECTOR, ".btn-medium.w-fit.mt-14")
+        if next_button:
+            print("Next button found! Clicking it...")
+            next_button.click()
+            # Wait for the page to load back
+            time.sleep(5)
+        else:
+            print("No next button found!")
+            break
+    except Exception as e:
+        print(f"Error finding or clicking the next button: {e}")
+        break
 
 # Keep browser open for testing
 time.sleep(500)
