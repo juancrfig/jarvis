@@ -333,10 +333,11 @@ setup_nvm() {
     echo "nvm and Node.js have been successfully installed and configured."
 }
 
-reviewer() {
+libraries() {
 
     pip install selenium &> /dev/null
     pip install undetected-chromedriver &> /dev/null
+    pip install kivy
     echo "Selenium and Chrome Driver installed!"
 
 }
@@ -354,7 +355,7 @@ case "$1" in
         configure_git
         setup_ssh
         setup_nvm
-	reviewer
+	libraries
         log_success "Protocolo de bievenida completado exitosamente"
         ;;
 
