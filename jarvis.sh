@@ -381,14 +381,14 @@ case "$1" in
         ;;
 
     "happy")
-	chmod +x review.py
+	chmod +x happy_jarvis.py
 	echo "Happy mode activated"
 	./happy_jarvis.py || log_error "Error"
 	echo "Lito a mimir"
 	;;
 
     *)
-        echo "Usage: $0 {hello|obsidian|bye|review|calificamela}"
+        echo "Usage: $0 {hello|obsidian|bye|review|happy}"
         echo "  hello         - Initial setup (VS Code cleanup, Git config, Firefox default)"
         echo "  obsidian      - Download Obsidian app, then open it"
         echo "  bye           - Cleanup all data and configurations"
