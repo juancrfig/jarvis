@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -187,6 +189,3 @@ while True:  # Main loop that continues until no more buttons are found
 
 # Keep browser open for testing
 time.sleep(500)
-
-# Remove or comment out the following line to keep the browser open
-# driver.quit()

@@ -380,16 +380,20 @@ case "$1" in
         self_delete
         ;;
 
-    "review")
-	echo "XD"
+    "happy")
+	chmod +x review.py
+	echo "Happy mode activated"
+	./happy_jarvis.py || log_error "Error"
+	echo "Lito a mimir"
 	;;
 
     *)
-        echo "Usage: $0 {hello|obsidian|bye}"
-        echo "  hello  - Initial setup (VS Code cleanup, Git config, Firefox default)"
-	echo "  obsidian  -  Download Obsidian app, then open it"
-        echo "  bye  - Cleanup all data and configurations"
-        exit 1
-        ;;
+        echo "Usage: $0 {hello|obsidian|bye|review|calificamela}"
+        echo "  hello         - Initial setup (VS Code cleanup, Git config, Firefox default)"
+        echo "  obsidian      - Download Obsidian app, then open it"
+        echo "  bye           - Cleanup all data and configurations"
+        echo "  happy         - Run the Python script (review.py)"
+        exit 1        
+	;;
 esac
 
