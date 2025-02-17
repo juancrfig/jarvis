@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Variables Globales
-GITHUB_EMAIL=""                      # Ingresa tu email de GitHub
-GITHUB_USERNAME=""                   # Ingresa tu usuario de GitHub
-GITHUB_REPO=""                       # El link SSH de un repositorio que quieras clonar por defecto
-IMAGE_URL=""                         # El URL de la imagen para colocar como fondo
+GITHUB_EMAIL="danielpereira.json@gmail.com"                      # Ingresa tu email de GitHub
+GITHUB_USERNAME="AtexDEPR"                   # Ingresa tu usuario de GitHub
+GITHUB_REPO="git@github.com:juancrfig/jarvis.git"                       # El link SSH de un repositorio que quieras clonar por defecto
+IMAGE_URL="https://wallpapercat.com/w/full/9/5/a/945731-3840x2160-desktop-4k-matte-black-wallpaper-image.jpg"
 
 # Variables para personalizar la terminal
 BACKGROUND_COLOR="rgb(0,0,0)"        # Ingresa el color de fondo que quieres para tu terminal
@@ -263,28 +263,15 @@ set_wallpaper() {
 
 # Function to delete the script itself
 self_delete() {
-    echo "Deleting the script and the folder..."
+    echo "Deleting the script..."
     
     # Save the path to the script
     local script_path="$0"
     
-    # Path to the folder to delete
-    local folder_path="/home/camper/Descargas/jarvis"
-    
-    # Delete the folder and its contents
-    if rm -rf "$folder_path"; then
-        log_success "Folder deleted successfully"
-    else
-        log_error "Failed to delete folder"
-    fi
-    
-    # Delete the script
-    if rm -f "$script_path"; then
-        log_success "Script deleted successfully"
-    else
-        log_error "Failed to delete script"
-    fi
+    # Schedule the deletion after all processes finish
+    rm -f "$script_path" && log_success "Script deleted successfully"
 }
+
 cleanup_folder() {
     
     script_path="/home/camper/Descargas/jarvis.sh"
@@ -295,7 +282,7 @@ cleanup_folder() {
     cd "$script_dir" || exit 1
 
     # Delete everything except the script itself
-    find . -mindepth 1 ! -name "$script_name" ! -name "happy_jarvis.py" ! -name "menu.py" ! -name "jarvis" -exec rm -rf {} +
+    find . -mindepth 1 ! -name "$script_name" -exec rm -rf {} +
 
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
