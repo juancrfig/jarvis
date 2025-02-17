@@ -347,15 +347,15 @@ libraries() {
 case "$1" in
     "hello")
 
-        cleanup_folder
-        set_wallpaper
-        customize_terminal
-        cleanup_vscode
-        xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser"
-        configure_git
-        setup_ssh
-        setup_nvm
-	libraries
+        cleanup_folder || true
+        set_wallpaper || true
+        customize_terminal || true
+        cleanup_vscode || true
+        xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true
+        configure_git || true
+        setup_ssh || true
+        setup_nvm || true 
+	    libraries || true
         log_success "Protocolo de bievenida completado exitosamente"
         ;;
 
@@ -364,7 +364,7 @@ case "$1" in
         ;;
 
     "bye")
-        cleanup_ssh
+        cleanup_ssh 
         cleanup_discord
         cleanup_vscode
         cleanup_browsers
