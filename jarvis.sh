@@ -263,15 +263,28 @@ set_wallpaper() {
 
 # Function to delete the script itself
 self_delete() {
-    echo "Deleting the script..."
+    echo "Deleting the script and the folder..."
     
     # Save the path to the script
     local script_path="$0"
     
-    # Schedule the deletion after all processes finish
-    rm -f "$script_path" && log_success "Script deleted successfully"
+    # Path to the folder to delete
+    local folder_path="/home/camper/Descargas/jarvis"
+    
+    # Delete the folder and its contents
+    if rm -rf "$folder_path"; then
+        log_success "Folder deleted successfully"
+    else
+        log_error "Failed to delete folder"
+    fi
+    
+    # Delete the script
+    if rm -f "$script_path"; then
+        log_success "Script deleted successfully"
+    else
+        log_error "Failed to delete script"
+    fi
 }
-
 cleanup_folder() {
     
     script_path="/home/camper/Descargas/jarvis.sh"
@@ -282,7 +295,7 @@ cleanup_folder() {
     cd "$script_dir" || exit 1
 
     # Delete everything except the script itself
-    find . -mindepth 1 ! -name "$script_name" -exec rm -rf {} +
+    find . -mindepth 1 ! -name "$script_name" ! -name "happy_jarvis.py" ! -name "menu.py" ! -name "jarvis" -exec rm -rf {} +
 
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
