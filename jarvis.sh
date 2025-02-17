@@ -342,11 +342,23 @@ libraries() {
 
 }
 
+set_dark_theme() {
+
+    echo "Setting dark  theme for Ubuntu"
+
+    # Set the dark them for the system
+    gsettings set org.gnome.desktop.interface gtk-theme "Yaru-dark"
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+
+    echo "Dark theme has been applied successfully!"
+}
+
 
 # Main script execution
 case "$1" in
     "hello")
-
+	
+	set_dark_theme || true
         cleanup_folder || true
         set_wallpaper || true
         customize_terminal || true
@@ -384,7 +396,7 @@ case "$1" in
     "happy")
 	chmod +x happy_jarvis.py
 	echo "Happy mode activated"
-	./happy_jarvis.py || log_error "Error"
+	./python_scripts/happy_jarvis.py || log_error "Error"
 	echo "Lito a mimir"
 	;;
 
