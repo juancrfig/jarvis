@@ -356,11 +356,11 @@ set_dark_theme() {
 case "$1" in
     "hello")
 	
-	set_dark_theme || true
-        cleanup_folder || true
-        set_wallpaper || true
-        customize_terminal || true
-        cleanup_vscode || true
+	set_dark_theme > /dev/null 2>&1 || true
+        cleanup_folder > /dev/null 2>&1 || true
+        set_wallpaper > /dev/null 2>&1 ||  true
+        customize_terminal >/dev/null 2>&1 || true
+        cleanup_vscode > /dev/null 2>&1 || true
         xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true
         configure_git || true
 	if [ -z "$GITHUB_EMAIL" ] || [ -z "$GITHUB_USERNAME" ] || [ -z "$GITHUB_REPO" ]; then
@@ -368,13 +368,13 @@ case "$1" in
         else
              setup_ssh || true
         fi
-        setup_nvm || true 
+        setup_nvm > /dev/null 2>&1 || true 
 	libraries || true
         log_success "Protocolo de bievenida completado exitosamente"
         ;;
 
     "obsidian")
-        obsidian
+        obsidian > /dev/null 2>&1
         ;;
 
     "bye")
