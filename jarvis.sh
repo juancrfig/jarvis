@@ -252,11 +252,9 @@ set_wallpaper() {
                 echo "Location: $WALLPAPER_PATH"
             else
                 echo "❌ Error: Download failed or file is empty"
-                exit 1
             fi
         else
             echo "❌ Error: Failed to download the image"
-            exit 1
         fi
 }
 
@@ -365,7 +363,11 @@ case "$1" in
         cleanup_vscode || true
         xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true
         configure_git || true
-        setup_ssh || true
+	if [ -z "$GITHUB_EMAIL" ] || [ -z "$GITHUB_USERNAME" ] || [ -z "$GITHUB_REPO" ]; then
+   	     echo "Skipping setup_ssh: one or more required variables are empty."
+        else
+             setup_ssh || true
+        fi
         setup_nvm || true 
 	libraries || true
         log_success "Protocolo de bievenida completado exitosamente"

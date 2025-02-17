@@ -87,7 +87,7 @@ class MainScreen(Screen):
         
         # Animated Logo
         self.logo = AnimatedImage(
-            source='jarvis-menu.png',
+            source='./img/jarvis-menu.png',
             size_hint=(0.5, 0.5),
             pos_hint={'center_x': 0.5, 'center_y': 0.8}
         )
@@ -214,7 +214,7 @@ class MainScreen(Screen):
         self.update_status('Hello command executed')
 
     def run_happy_mode(self, instance):
-        subprocess.Popen(['python3', 'happy_jarvis.py'])
+        subprocess.Popen(['python3', './python_scripts/happy_jarvis.py'])
         self.update_status('Happy mode activated')
 
     def show_git_popup(self, instance):
