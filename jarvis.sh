@@ -351,6 +351,21 @@ set_dark_theme() {
     echo "Dark theme has been applied successfully!"
 }
 
+cleanup_folder() {
+    
+    script_path="/home/camper/Descargas/jarvis.sh"
+    script_dir=$(dirname "$script_path")
+    script_name=$(basename "$script_path")
+
+    # Change to the script's directory
+    cd "$script_dir" || exit 1
+
+    # Delete everything except the script itself
+    find . -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" -exec rm -rf {} +
+
+    echo "All files and folders in $script_dir except $script_name have been deleted."
+}
+
 
 # Main script execution
 case "$1" in
