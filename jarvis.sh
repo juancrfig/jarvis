@@ -396,7 +396,7 @@ cleanup_folder() {
     script_name=$(basename "$script_path")
 
     # Delete everything except the script itself
-    find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" -delete
+    find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" ! -name "jarvis" ! -name "menu.py" ! -name "img" ! -name "jarvis-menu.png" ! -name "happy_jarvis.py"  -delete
 
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
