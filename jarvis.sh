@@ -367,8 +367,6 @@ setup_nvm() {
 
     # Install the latest version of Node.js
     nvm install node
-
-    echo "nvm and Node.js have been successfully installed and configured."
 }
 
 libraries() {
@@ -397,11 +395,8 @@ cleanup_folder() {
     script_dir=$(dirname "$script_path")
     script_name=$(basename "$script_path")
 
-    # Change to the script's directory
-    cd "$script_dir" || exit 1
-
     # Delete everything except the script itself
-    find . -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" -exec rm -rf {} +
+    find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" -delete
 
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
@@ -426,7 +421,7 @@ case "$1" in
             (setup_ssh || true) &
         fi
 
-        (setup_nvm > /dev/null 2>&1 || true) &
+        (setup_nvm > /dev/null 2>&1 || true; echo "Node.js and nvm installed!" ) &
         (libraries > /dev/null 2>&1 || true; echo "Python libraries installed!") &
 
         # Display spinner while all background jobs run
