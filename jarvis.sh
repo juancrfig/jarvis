@@ -13,6 +13,22 @@ FONT="Monospace 12"                              # Ingresa el estilo de letra
 FOREGROUND_COLOR="rgb(255,255,255)"  # Ingresa el color de la letra
 
 
+# Spinner function that tracks a specific process
+show_spinner() {
+    local pid=$1
+    local message=$2
+    local delay=0.1
+    local spin='|/-\'
+    
+    while ps -p $pid >/dev/null 2>&1; do
+        for i in $(seq 0 3); do
+            printf "\r[%c] %s" "${spin:$i:1}" "$message"
+            sleep $delay
+        done
+    done
+    printf "\r[✔] %s\n" "$message"
+}
+
 # Function to personalize the terminal
 customize_terminal() {
     PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
@@ -284,31 +300,55 @@ self_delete() {
     fi
 }
 
-
+# Obsidian installation and launch function
 obsidian() {
-
-    # Define the URL and destination folder
-    URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian-1.7.7.AppImage"
-    DESTINATION="$HOME/Descargas"
-
-    # File name to save as
-    FILENAME="Obsidian.AppImage"
-
-    # Change to the destination directory
+    local URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian-1.7.7.AppImage"
+    local DESTINATION="$HOME/Descargas"
+    local FILENAME="Obsidian.AppImage"
+    
+    # Create destination directory if it doesn't exist
+    mkdir -p "$DESTINATION"
     cd "$DESTINATION" || exit 1
-
-    # Download the file
-    echo "Downloading Obsidian..."
-    curl -L "$URL" -o "$FILENAME" || { echo "Download failed!"; exit 1; }
-
-    # Make the file executable
-    chmod +x "$FILENAME"
-    ./"$FILENAME" --appimage-extract
-    rm "$FILENAME"
-    mv squashfs-root obsidian-folder
-    cd obsidian-folder
-    ./obsidian
-
+    
+    # Download and setup in a subshell with process tracking
+    (
+        # Download the file
+        if ! curl -L "$URL" -o "$FILENAME" > /dev/null 2>&1 ; then
+            echo "Download failed!"
+            exit 1
+        fi
+        
+        chmod +x "$FILENAME"
+        
+        # Extract AppImage
+        if ! ./"$FILENAME" --appimage-extract >/dev/null 2>&1; then
+            echo "Extraction failed!"
+            exit 1
+        fi
+        
+        rm "$FILENAME"
+        [[ -d obsidian-folder ]] && rm -rf obsidian-folder
+        mv squashfs-root obsidian-folder
+    ) &
+    
+    # Store background process PID
+    local setup_pid=$!
+    
+    # Show spinner while waiting for the setup
+    show_spinner $setup_pid "Downloading and setting up Obsidian..."
+    
+    # Wait for setup to complete
+    wait $setup_pid
+    
+    if [ $? -eq 0 ]; then
+        echo "Installation completed. Launching Obsidian..."
+        # Launch Obsidian with complete detachment
+        nohup "$DESTINATION/obsidian-folder/obsidian" >/dev/null 2>&1 & disown
+        echo "Obsidian launched successfully!"
+    else
+        echo "An error occurred during installation."
+        exit 1
+    fi
 }
 
 setup_nvm() {
@@ -370,27 +410,37 @@ cleanup_folder() {
 # Main script execution
 case "$1" in
     "hello")
-	
-	set_dark_theme > /dev/null 2>&1 || true
-        cleanup_folder > /dev/null 2>&1 || true
-        set_wallpaper > /dev/null 2>&1 ||  true
-        customize_terminal >/dev/null 2>&1 || true
-        cleanup_vscode > /dev/null 2>&1 || true
-        xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true
-        configure_git || true
-	if [ -z "$GITHUB_EMAIL" ] || [ -z "$GITHUB_USERNAME" ] || [ -z "$GITHUB_REPO" ]; then
-   	     echo "Skipping setup_ssh: one or more required variables are empty."
+        # Start tasks in the background and track each step
+        (set_dark_theme > /dev/null 2>&1 || true; echo "Dark theme set!") &
+        (cleanup_folder > /dev/null 2>&1 || true; echo "Main folder cleaned up!") &
+        (set_wallpaper > /dev/null 2>&1 || true; echo "Wallpaper set!") &
+        (customize_terminal > /dev/null 2>&1 || true; echo "Terminal aspect improved!") &
+        (cleanup_vscode > /dev/null 2>&1 || true; echo "Visual Studio Code previous configs erased!") &
+        (xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true) &
+        (configure_git || true) &
+        
+        # Handle SSH setup based on variables
+        if [ -z "$GITHUB_EMAIL" ] || [ -z "$GITHUB_USERNAME" ] || [ -z "$GITHUB_REPO" ]; then
+            echo "Skipping setup_ssh: one or more required variables are empty."
         else
-             setup_ssh || true
+            (setup_ssh || true) &
         fi
-        setup_nvm > /dev/null 2>&1 || true 
-	libraries || true
-        log_success "Protocolo de bievenida completado exitosamente"
+
+        (setup_nvm > /dev/null 2>&1 || true) &
+        (libraries > /dev/null 2>&1 || true; echo "Python libraries installed!") &
+
+        # Display spinner while all background jobs run
+        show_spinner "Initializing Welcome protocol"
+
+        # Ensure all tasks are complete
+        wait
+
+        log_success "Protocolo de bienvenida completado exitosamente"
         ;;
 
     "obsidian")
-        obsidian > /dev/null 2>&1
-        ;;
+	obsidian
+	;;
 
     "bye")
         cleanup_ssh 
