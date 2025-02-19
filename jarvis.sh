@@ -13,6 +13,10 @@ FONT="Monospace 12"                              # Ingresa el estilo de letra
 FOREGROUND_COLOR="rgb(255,255,255)"  # Ingresa el color de la letra
 
 
+sql() {
+    mysql -u campus2023 -pcampus2023
+}
+
 # Spinner function that tracks a specific process
 show_spinner() {
     local pid=$1
@@ -421,47 +425,51 @@ case "$1" in
             configure_git
             
             # Handle SSH setup
-            local SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
+            SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
             
             # Generate SSH key
-            ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || { log_error "Failed to generate SSH key"; return 1; }
+            ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || { log_error "Failed to generate SSH key"; }
             
-            # Start SSH agent and add key
-            eval "$(ssh-agent -s)"
-            ssh-add "$SSH_KEY_PATH" || { log_error "Failed to add SSH key to agent"; return 1; }
-            
-            # Display public key
-            echo -e "\nAdd this public key to GitHub (https://github.com/settings/keys):"
-            cat "${SSH_KEY_PATH}.pub"
-            
-            # Wait for user confirmation
-            read -p "Press [Enter] after adding the key to GitHub..."
-            
-            # Clone repository only if GITHUB_REPO is defined
-            if [ -n "$GITHUB_REPO" ]; then
-                echo "Cloning repository..."
-                GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
-                log_success "Repository cloned successfully"
-            else
-                log_info "Skipping repository clone: GITHUB_REPO not defined"
+            if [ $? -eq 0 ]; then
+                # Start SSH agent and add key
+                eval "$(ssh-agent -s)"
+                ssh-add "$SSH_KEY_PATH" || { log_error "Failed to add SSH key to agent"; }
+                
+                # Display public key
+                echo -e "\nAdd this public key to GitHub (https://github.com/settings/keys):"
+                cat "${SSH_KEY_PATH}.pub"
+                
+                # Wait for user confirmation
+                read -p "Press [Enter] after adding the key to GitHub..."
+                
+                # Clone repository only if GITHUB_REPO is defined
+                if [ -n "$GITHUB_REPO" ]; then
+                    echo "Cloning repository..."
+                    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
+                    log_success "Repository cloned successfully"
+                else
+                    echo "Skipping repository clone: GITHUB_REPO not defined"
+                fi
+                
+                log_success "SSH setup complete"
             fi
-            
-            log_success "SSH setup complete"
         else
-            log_info "Skipping Git and SSH setup: GitHub credentials not provided"
+            echo "Skipping Git and SSH setup: GitHub credentials not provided"
         fi
         
-        # Display spinner while all background jobs run
-        show_spinner $! "Initializing Welcome protocol"
-        
-        # Ensure all tasks are complete
+        # Wait for background processes to complete
         wait
+        
         log_success "Protocolo de bienvenida completado exitosamente"
         ;;
 
     "obsidian")
 	obsidian
 	;;
+
+    "sql")
+    	sql
+     	;;
 
     "bye")
         cleanup_ssh 
