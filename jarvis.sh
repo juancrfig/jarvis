@@ -405,7 +405,6 @@ cleanup_folder() {
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
 
-
 # Main script execution
 case "$1" in
     "hello")
@@ -462,7 +461,6 @@ case "$1" in
         
         log_success "Protocolo de bienvenida completado exitosamente"
         ;;
-
     "obsidian")
 	obsidian
 	;;
