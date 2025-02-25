@@ -371,10 +371,8 @@ setup_nvm() {
 
 libraries() {
 
-    pip install selenium &> /dev/null
-    pip install undetected-chromedriver &> /dev/null
     pip install kivy
-    echo "Selenium, Chrome Driver, and Kivy installed!"
+    echo "Kivy installed!"
 
 }
 
@@ -456,11 +454,13 @@ case "$1" in
         ;;
 
     "happy")
-	chmod +x happy_jarvis.py
-	echo "Happy mode activated"
-	./python_scripts/happy_jarvis.py || log_error "Error"
-	echo "Lito a mimir"
-	;;
+        pip install selenium &> /dev/null
+        pip install undetected-chromedriver &> /dev/null
+	    chmod +x happy_jarvis.py
+	    echo "Happy mode activated"
+	    ./python_scripts/happy_jarvis.py || log_error "Error"
+	    echo "Lito a mimir"
+	    ;;
 
     *)
         echo "Usage: $0 {hello|obsidian|bye|review|happy}"
