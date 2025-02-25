@@ -13,6 +13,10 @@ FONT="Monospace 12"                              # Ingresa el estilo de letra
 FOREGROUND_COLOR="rgb(255,255,255)"  # Ingresa el color de la letra
 
 
+sql() {
+    mysql -u campus2023 -pcampus2023
+}
+
 # Spinner function that tracks a specific process
 show_spinner() {
     local pid=$1
@@ -394,46 +398,74 @@ cleanup_folder() {
     script_name=$(basename "$script_path")
 
     # Delete everything except the script itself
-    find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" -delete
+    find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" ! -name "jarvis" ! -name "menu.py" ! -name "img" ! -name "jarvis-menu.png" ! -name "happy_jarvis.py"  -delete
 
     echo "All files and folders in $script_dir except $script_name have been deleted."
 }
 
-
 # Main script execution
 case "$1" in
     "hello")
-        # Start tasks in the background and track each step
+        # Start tasks that don't depend on GitHub credentials in the background
         (set_dark_theme > /dev/null 2>&1 || true; echo "Dark theme set!") &
         (cleanup_folder > /dev/null 2>&1 || true; echo "Main folder cleaned up!") &
         (set_wallpaper > /dev/null 2>&1 || true; echo "Wallpaper set!") &
         (customize_terminal > /dev/null 2>&1 || true; echo "Terminal aspect improved!") &
         (cleanup_vscode > /dev/null 2>&1 || true; echo "Visual Studio Code previous configs erased!") &
         (xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true) &
-        (configure_git || true) &
-        
-        # Handle SSH setup based on variables
-        if [ -z "$GITHUB_EMAIL" ] || [ -z "$GITHUB_USERNAME" ] || [ -z "$GITHUB_REPO" ]; then
-            echo "Skipping setup_ssh: one or more required variables are empty."
-        else
-            (setup_ssh || true) &
-        fi
-
         (setup_nvm > /dev/null 2>&1 || true; echo "Node.js and nvm installed!" ) &
         (libraries > /dev/null 2>&1 || true; echo "Python libraries installed!") &
-
-        # Display spinner while all background jobs run
-        show_spinner "Initializing Welcome protocol"
-
-        # Ensure all tasks are complete
+        
+        # Handle Git and SSH setup separately
+        if [ -n "$GITHUB_USERNAME" ] && [ -n "$GITHUB_EMAIL" ]; then
+            # Configure Git
+            configure_git
+            
+            # Handle SSH setup
+            SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
+            
+            # Generate SSH key
+            ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || { log_error "Failed to generate SSH key"; }
+            
+            if [ $? -eq 0 ]; then
+                # Start SSH agent and add key
+                eval "$(ssh-agent -s)"
+                ssh-add "$SSH_KEY_PATH" || { log_error "Failed to add SSH key to agent"; }
+                
+                # Display public key
+                echo -e "\nAdd this public key to GitHub (https://github.com/settings/keys):"
+                cat "${SSH_KEY_PATH}.pub"
+                
+                # Wait for user confirmation
+                read -p "Press [Enter] after adding the key to GitHub..."
+                
+                # Clone repository only if GITHUB_REPO is defined
+                if [ -n "$GITHUB_REPO" ]; then
+                    echo "Cloning repository..."
+                    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
+                    log_success "Repository cloned successfully"
+                else
+                    echo "Skipping repository clone: GITHUB_REPO not defined"
+                fi
+                
+                log_success "SSH setup complete"
+            fi
+        else
+            echo "Skipping Git and SSH setup: GitHub credentials not provided"
+        fi
+        
+        # Wait for background processes to complete
         wait
-
+        
         log_success "Protocolo de bienvenida completado exitosamente"
         ;;
-
     "obsidian")
 	obsidian
 	;;
+
+    "sql")
+    	sql
+     	;;
 
     "bye")
         cleanup_ssh 
