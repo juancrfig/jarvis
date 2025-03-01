@@ -58,7 +58,7 @@ BACKGROUND_COLOR="#000000"
 BACKGROUND_TRANSPARENCY_PERCENT=17
 
 # Tipo y tamaño de fuente para la terminal:
-FONT="Monospace 12"
+FONT="Liberation Mono 12"
 
 # Color del texto en la terminal en formato RGB o hexadecimal(#):
 FOREGROUND_COLOR="rgb(255,255,255)"
