@@ -21,7 +21,7 @@ IMAGE_URL=""
   # --- Personalización de la terminal ---
 
 # Color de fondo de la terminal en formato RGB o hexadecimal(#):
-BACKGROUND_COLOR="rgb(0,0,0)"
+BACKGROUND_COLOR="#000000"
 
 # Nivel de transparencia del fondo de la terminal (0-100):
 BACKGROUND_TRANSPARENCY_PERCENT=17
