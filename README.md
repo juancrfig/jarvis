@@ -1,7 +1,7 @@
 <h1 align="center">Jarvis</h1>
 
 <div align="center">
-  <img src="img/jarvis_logo_resized.png" alt="Logo de Jarvis" width="300">
+  <img src="img/Logos/JL2.png" alt="Logo de Jarvis" width="300">
 </div>
 
 **Jarvis** es un asistente basado en la terminal, diseñado para automatizar tareas repetitivas en los computadores de Campuslands. 🚀
