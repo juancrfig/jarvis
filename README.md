@@ -1,23 +1,22 @@
-# Jarvis
+<h1 align="center">Jarvis</h1>
 
 <div align="center">
-  <img src="img/jarvis_logo_resized.png" alt="Logo" width="300">
+  <img src="img/jarvis_logo_resized.png" alt="Logo de Jarvis" width="300">
 </div>
 
-Jarvis es un asistente de la terminal cuyo propósito es evitar procesos 
-repetitivos en los computadores de Campuslands.
+Jarvis es un asistente basado en la terminal, cuyo propósito es evitar procesos repetitivos en los computadores de Campuslands.
 
 ## Funcionalidades
 
-- Califica automáticamente las clases de Software skills y Ser.
 - Limpiar archivos que dejaron anteriores usarios en el computador.
 - Elegir automaticamente un navegador como predeterminado, basado en la elección previa del usuario.
 - Sincronizar GitHub mediante una llave SSH.
 - Instala Node.js
 - Modifica la estética de la terminal a tu gusto.
 - Cambiar el fondo del computador.
+- ***Califica automáticamente las clases de Software skills y Ser.***
 - Descargar e iniciar la aplicación Obsidian (*util para hacer apuntes en archivos Markdown*).
-- Limpiar automaticamente todos los archivos, sesiones y todo rastro del usuario. 
+- Limpiar automaticamente todos los archivos, sesiones y todo rastro del usuario.
 - Apagar automaticante el computador.
 
 ### ¿Cómo se usa?
@@ -26,7 +25,8 @@ repetitivos en los computadores de Campuslands.
 ![primer_ejemplo](img/variables_ejemplo.png)
 
 La idea es que llenes estas variables con la información que piden, así Jarvis se adaptará a tu gusto.
-- Darle permisos de ejecución a Jarvis mediante el comando ```chmod +x jarvis```
+- Darle permisos de ejecución a Jarvis mediante el comando ```chmod +x jarvis.sh```
+
 - Jarvis tiene **3 protocolos**:
 
 1. ***Protocolo de bienvenida***
