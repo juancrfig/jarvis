@@ -30,7 +30,39 @@
 ### 1️⃣ Configurar variables
 Al descargar Jarvis, verás en las primeras líneas del código variables globales:
 
-![Ejemplo de variables](img/variables_ejemplo.png)
+```bash
+          # Variables Globales:
+
+    # --- Configuración de GitHub ---
+
+# Tu correo electrónico asociado a GitHub:
+GITHUB_EMAIL="lorem@gmail.com"
+
+# Tu nombre de usuario en GitHub:
+GITHUB_USERNAME="myUserName"
+
+# Enlace SSH del repositorio que deseas clonar por defecto:
+GITHUB_REPO="https://github.com/myUsername/lorem.git"
+
+  # --- Personalización del PC ---
+
+# URL de la imagen que se usará como fondo de pantalla.  
+IMAGE_URL="https://background.com/myBackground"
+
+  # --- Personalización de la terminal ---
+
+# Color de fondo de la terminal en formato RGB o hexadecimal(#):
+BACKGROUND_COLOR="#000000"
+
+# Nivel de transparencia del fondo de la terminal (0-100):
+BACKGROUND_TRANSPARENCY_PERCENT=17
+
+# Tipo y tamaño de fuente para la terminal:
+FONT="Monospace 12"
+
+# Color del texto en la terminal en formato RGB o hexadecimal(#):
+FOREGROUND_COLOR="rgb(255,255,255)"
+```
 
 Completa estas variables con la información requerida para personalizar Jarvis a tu gusto.
 
