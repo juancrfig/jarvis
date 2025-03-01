@@ -1,5 +1,7 @@
 <h1 align="center">Jarvis</h1>
 
+<img src="https://readme-typing-svg.demolab.com?font=Oxanium&weight=500&size=26&duration=3000&pause=300&color=EBEBFF&background=010B13&vCenter=true&width=1000&height=100&lines=%F0%9F%9A%80+Automatiza%2C+ahorra+tiempo+y+optimiza+tu+flujo+de+trabajo%E2%80%A6;%F0%9F%94%A5+Jarvis+hace+el+trabajo+tedioso+por+ti%2C+con+solo+un+comando%E2%80%A6;%F0%9F%96%A5%EF%B8%8F+Personaliza+tu+entorno+y+olv%C3%ADdate+de+configuraciones+manuales%E2%80%A6;%F0%9F%94%92+Seguridad+y+limpieza+garantizadas+al+final+de+cada+sesi%C3%B3n%E2%80%A6;%E2%9C%A8+Adi%C3%B3s+al+desorden%2C+hola+a+la+eficiencia+con+Jarvis%E2%80%A6;%F0%9F%92%A1+Simplifica+tareas+repetitivas+y+enf%C3%B3cate+en+lo+que+realmente+importa%E2%80%A6;%F0%9F%A4%96+Jarvis%2C+tu+asistente+en+la+terminal%2C+siempre+listo+para+ayudarte%E2%80%A6" alt="Frases: Automatiza, ahorra tiempo y optimiza tu flujo de trabajo. Jarvis hace el trabajo tedioso por ti, con solo un comando. Personaliza tu entorno y olvídate de configuraciones manuales. Seguridad y limpieza garantizadas al final de cada sesión. Adiós al desorden, hola a la eficiencia con Jarvis. Simplifica tareas repetitivas y enfócate en lo que realmente importa. Jarvis, tu asistente en la terminal, siempre listo para ayudarte."/>
+
 <div align="center">
   <img src="img/jarvis_logo_resized.png" alt="Logo de Jarvis" width="300">
 </div>
@@ -97,4 +99,4 @@ chmod +x jarvis.sh
 
 ---
 
-¡Disfruta la automatización con Jarvis! 😎🔥
+<p align="center">¡Disfruta la automatización con Jarvis! 😎🔥</p>
