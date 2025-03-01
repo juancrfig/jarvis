@@ -4,71 +4,97 @@
   <img src="img/jarvis_logo_resized.png" alt="Logo de Jarvis" width="300">
 </div>
 
-Jarvis es un asistente basado en la terminal, cuyo propósito es evitar procesos repetitivos en los computadores de Campuslands.
+**Jarvis** es un asistente basado en la terminal, diseñado para automatizar tareas repetitivas en los computadores de Campuslands. 🚀
 
-## Funcionalidades
+---
 
-- Limpiar archivos que dejaron anteriores usarios en el computador.
-- Elegir automaticamente un navegador como predeterminado, basado en la elección previa del usuario.
-- Sincronizar GitHub mediante una llave SSH.
-- Instala Node.js
-- Modifica la estética de la terminal a tu gusto.
-- Cambiar el fondo del computador.
-- ***Califica automáticamente las clases de Software skills y Ser.***
-- Descargar e iniciar la aplicación Obsidian (*util para hacer apuntes en archivos Markdown*).
-- Limpiar automaticamente todos los archivos, sesiones y todo rastro del usuario.
-- Apagar automaticante el computador.
+## ✨ Funcionalidades
 
-### ¿Cómo se usa?
+- 🧹 **Limpieza**: Elimina archivos de usuarios anteriores.
+- 🌐 **Navegador predeterminado**: Configura automáticamente el navegador basado en la última elección del usuario.
+- 🔑 **Sincronización GitHub**: Conecta GitHub mediante una llave SSH.
+- 📦 **Instalación de Node.js**.
+- 🎨 **Personalización**: Modifica la estética de la terminal a tu gusto.
+- 🖼 **Cambio de fondo**: Ajusta el fondo de pantalla del computador.
+- 🤖 **Calificación automática**: Evalúa clases de Software Skills y Ser.
+- 📝 **Obsidian**: Descarga e inicia la aplicación (*ideal para apuntes en Markdown*).
+- 🗑 **Limpieza total**: Borra archivos, sesiones y rastros del usuario.
+- ⏳ **Apagado automático** del computador.
 
-- Al descargar Jarvis verás en las primeras lineas del codigo variables globales
-![primer_ejemplo](img/variables_ejemplo.png)
+---
 
-La idea es que llenes estas variables con la información que piden, así Jarvis se adaptará a tu gusto.
-- Darle permisos de ejecución a Jarvis mediante el comando ```chmod +x jarvis.sh```
+## 🚀 Instalación y Configuración
 
-- Jarvis tiene **3 protocolos**:
+### 1️⃣ Configurar variables
+Al descargar Jarvis, verás en las primeras líneas del código variables globales:
 
-1. ***Protocolo de bienvenida***
+![Ejemplo de variables](img/variables_ejemplo.png)
 
-    Lo activas mediante ```./jarvis.sh hello```
-    Este protocolo se encarga de:
+Completa estas variables con la información requerida para personalizar Jarvis a tu gusto.
 
-       - Limpia la carpeta de descargas.
-       - Coloca el fondo que elegiste.
-       - Personaliza la terminal.
-       - Limpia VS Code, así no apareceran extensiones y/o comandos predefinidos de usarios anteriores.
-       - Coloca como navegador predeterminado a Google Chrome.
-       - Modifica el archivo ```~/.gitconfig``` con tus datos. 
-       - Conecta mediante una llave SSH el computador con tu cuenta de GitHub, para poder usar Git sin tener que ingresar tu contraseña en cada push.
-       - Instala Node.js
+### 2️⃣ Dar permisos de ejecución
+Ejecuta el siguiente comando en la terminal:
+```bash
+chmod +x jarvis.sh
+```
 
+---
 
-2. ***Protocolo Obsidian*** 
+## ⚙️ Protocolos disponibles
 
-    Lo activas mediante ```./jarvis obsidian```
-    Este protocolo se encarga de:
+### 🔹 **Protocolo de bienvenida**
+📌 Comando:
+```bash
+./jarvis.sh hello
+```
+✅ Funciones:
+- 🧹 Limpia la carpeta de descargas.
+- 🖼 Cambia el fondo de pantalla.
+- 🎨 Personaliza la terminal.
+- 🧑‍💻 Limpia VS Code (elimina extensiones y configuraciones previas).
+- 🌐 Configura Google Chrome como navegador predeterminado.
+- 🔑 Modifica `~/.gitconfig` con tus datos.
+- 🔗 Vincula GitHub mediante SSH.
+- 📦 Instala Node.js.
 
-       - Descargar la aplicación Obsidian y abrirla automáticamente.
+---
 
-3. ***Jarvis Happy Mode***
+### 📝 **Protocolo Obsidian**
+📌 Comando:
+```bash
+./jarvis.sh obsidian
+```
+✅ Funciones:
+- 📥 Descarga la aplicación Obsidian.
+- 🚀 Abre Obsidian automáticamente.
 
-    Lo activas mediante ```./jarvis.sh happy```
-    Este protocolo se encarga de:
+---
 
-       - Califica las clases de Software Skills y Ser con caritas felices por defecto.
+### 😃 **Jarvis Happy Mode**
+📌 Comando:
+```bash
+./jarvis.sh happy
+```
+✅ Funciones:
+- 😃 Califica automáticamente las clases de Software Skills y Ser con caritas felices.
 
+---
 
-4. ***Protocolo de despedida***
+### 🔻 **Protocolo de despedida**
+📌 Comando:
+```bash
+./jarvis.sh bye
+```
+✅ Funciones:
+- ❌ Elimina la llave SSH vinculada en el protocolo de bienvenida.
+- 🚪 Cierra sesión en VS Code.
+- 🔍 Borra datos de sesión en navegadores Firefox y Chrome.
+- 🗑 Elimina todos los archivos en la carpeta Descargas.
+- 🧑‍💻 Borra la información de `~/.gitconfig`.
+- 📜 Elimina el historial de comandos de la terminal.
+- ⏳ Programa el apagado del computador en 10 segundos.
+- 💣 **Jarvis se autodestruye.**
 
-    Lo activas mediante ```./jarvis bye```
-    Este protocolo se encarga de:
+---
 
-       - Elimina la llave SSH que se vinculó en el protocolo de bienvenida.
-       - Cierra sesión en tu cuenta de VS Code.
-       - Cierra sesión y elimina todo rastro tuyo en los navegadores Firefox y Chrome.
-       - Elimina todo archivo de la carpeta de Descargas.
-       - Elimina toda tu información del archivo ```~/.gitconfig```
-       - Elimina el historial de comandos de la terminal.
-       - Programa el computador para apagarse en 10 segundos.
-       - Jarvis se autodestruye. 
+¡Disfruta la automatización con Jarvis! 😎🔥
