@@ -87,7 +87,7 @@ class MainScreen(Screen):
         
         # Animated Logo
         self.logo = AnimatedImage(
-            source='./img/jarvis-menu.png',
+            source='./img/banner.png',
             size_hint=(0.5, 0.5),
             pos_hint={'center_x': 0.5, 'center_y': 0.8}
         )
