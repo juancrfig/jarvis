@@ -18,10 +18,10 @@ import os
 
 COLORS = {
     'background': '#000000',
-    'text': '#00ff00',
-    'accent': '#2b2b2b',
-    'secondary': '#004000',
-    'warning': '#ff0000'
+    'text': '#2A13BB',
+    'accent': '#EBEBFF',
+    'secondary': '#190040',
+    'warning': '#2A13BB'
 }
 
 class AnimatedImage(Image):
@@ -88,8 +88,8 @@ class MainScreen(Screen):
         # Animated Logo
         self.logo = AnimatedImage(
             source='./img/banner.png',
-            size_hint=(0.5, 0.5),
-            pos_hint={'center_x': 0.5, 'center_y': 0.8}
+            size_hint=(0.79, 0.79),
+            pos_hint={'center_x': 0.5, 'center_y': 0.77}
         )
         self.layout.add_widget(self.logo)
         
