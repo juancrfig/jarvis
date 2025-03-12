@@ -42,24 +42,7 @@ check_variables() {
 	sed -i.bak -E "s/^(GITHUB_EMAIL=).*/\1\"$GITHUB_EMAIL\"/" "$0"
     fi
 
-    if [ -z "$GITHUB_USERNAME" ]; then
-        read -p "There's no defined username. Please enter one: " GITHUB_USERNAME
-        # Update the script file to include the new value
-        sed -i.bak -E "s/^(GITHUB_USERNAME=).*/\1\"$GITHUB_USERNAME\"/" "$0"
-    fi
-
-    if [ -z "$GITHUB_REPO" ]; then
-        read -p "There's no defined default Github repository. Please enter one: " GITHUB_REPO
-        # Update the script file to include the new value
-        sed -i.bak -E "s/^(GITHUB_REPO=).*/\1\"$GITHUB_REPO\"/" "$0"
-    fi
-
-    if [ -z "$IMAGE_URL" ]; then
-        read -p "There's no defined image URL. Please enter one: " IMAGE_URL
-        # Update the script file to include the new value
-        sed -i.bak -E "s/^(IMAGE_URL=).*/\1\"$IMAGE_URL\"/" "$0"
-    fi
-
+echo "Your email was set as $GITHUB_EMAIL"
 }
 
 
