@@ -408,6 +408,56 @@ obsidian() {
     fi
 }
 
+cursor() {
+    local URL="https://downloads.cursor.com/production/client/linux/x64/appimage/Cursor-0.46.11-ae378be9dc2f5f1a6a1a220c6e25f9f03c8d4e19.deb.glibc2.25-x86_64.AppImage"
+    local DESTINATION="$HOME/Descargas"
+    local FILENAME="Cursor.AppImage"
+    
+    # Create destination directory if it doesn't exist
+    mkdir -p "$DESTINATION"
+    cd "$DESTINATION" || exit 1
+    
+    # Download and setup in a subshell with process tracking
+    (
+        # Download the file
+        if ! curl -L "$URL" -o "$FILENAME" > /dev/null 2>&1 ; then
+            echo "Download failed!"
+            exit 1
+        fi
+
+        chmod +x "$FILENAME"
+
+        # Extract AppImage
+        if ! ./"$FILENAME" --appimage-extract >/dev/null 2>&1; then
+            echo "Extraction failed!"
+            exit 1
+        fi
+
+        rm "$FILENAME"
+        [[ -d cursor-folder ]] && rm -rf cursor-folder
+        mv squashfs-root cursor-folder
+    ) &
+    
+    # Store background process PID
+    local setup_pid=$!
+    
+    # Show spinner while waiting for the setup
+    show_spinner $setup_pid "Downloading and setting up Cursor..."
+    
+    # Wait for setup to complete
+    wait $setup_pid
+    
+    if [ $? -eq 0 ]; then
+        echo "Installation completed. Launching Cursor..."
+        # Launch Cursor with complete detachment
+        nohup "$DESTINATION/cursor-folder/AppRun" >/dev/null 2>&1 & disown
+        echo "Cursor launched successfully!"
+    else
+        echo "An error occurred during installation."
+        exit 1
+    fi
+}
+
 setup_nvm() {
     # Install nvm
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -516,7 +566,9 @@ case "$1" in
     "obsidian")
 	obsidian
 	;;
-
+    "cursor")
+        cursor
+	;;
     "sql")
     	sql
      	;;
