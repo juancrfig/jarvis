@@ -63,7 +63,6 @@ check_variables() {
 }
 
 
-
 sql() {
     mysql -u campus2023 -pcampus2023
 }
@@ -460,6 +459,7 @@ cleanup_folder() {
 # Main script execution
 case "$1" in
     "hello")
+	check_variables
         # Start tasks that don't depend on GitHub credentials in the background
         (set_dark_theme > /dev/null 2>&1 || true; echo "Dark theme set!") &
         (cleanup_folder > /dev/null 2>&1 || true; echo "Main folder cleaned up!") &
@@ -520,9 +520,6 @@ case "$1" in
     "sql")
     	sql
      	;;
-    "var")
-        check_variables
-        ;;
 
     "bye")
         cleanup_ssh 
