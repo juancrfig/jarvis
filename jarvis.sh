@@ -33,6 +33,25 @@ FONT="Liberation Mono 12"
 FOREGROUND_COLOR="rgb(255,255,255)"
 
 
+
+# Function to prompt for a variable if it is not defined
+prompt_for_variable() {
+    local var_name=$1
+    local prompt_message=$2
+
+    if [ -z "${!var_name}" ]; then
+        read -p "$prompt_message: " $var_name
+    fi
+}
+
+
+# Function to prompt the user for missing variables
+check_variables() {
+
+}
+
+
+
 sql() {
     mysql -u campus2023 -pcampus2023
 }
@@ -105,6 +124,9 @@ RESET='\[\033[0m\]'
 PS1="${GREEN}\u${RESET}@${BLUE}\h${RESET}:${PURPLE}\w${RESET}\$ "
 EOF
     fi
+
+    echo "set tabsize 4" >> ~/.nanorc
+    echo "set tabstospaces" >> ~/.nanorc
 
     # Apply changes
     source ~/.bashrc
