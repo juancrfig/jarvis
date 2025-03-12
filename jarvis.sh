@@ -62,7 +62,6 @@ check_variables() {
 
 }
 
-
 sql() {
     mysql -u campus2023 -pcampus2023
 }
@@ -142,7 +141,6 @@ EOF
     # Apply changes
     source ~/.bashrc
     reset
-    echo "Terminal customization applied!"
 }
 
 # Funcion para configurar Git
@@ -155,7 +153,6 @@ configure_git() {
     git config --global pull.rebase false
     git config --global core.autocrlf input
     git config --global core.abbrev 10
-    log_success "Git configuration complete"
 }
 
 # Funcion para limpiar VS Code
@@ -169,7 +166,6 @@ cleanup_vscode() {
                 pkill -9 -f "code"
         fi
 
-    echo "Cleaning VS Code data..."
     local vscode_paths=(
         "$HOME/.config/Code"
         "$HOME/.vscode"
@@ -184,7 +180,6 @@ cleanup_vscode() {
     for path in "${vscode_paths[@]}"; do
         rm -rf "$path" 2>/dev/null
     done
-    log_success "VS Code cleanup complete"
 }
 
 cleanup_browsers() {
@@ -243,21 +238,7 @@ cleanup_browsers() {
         # Use find to handle wildcards and remove files/directories
         find "${path%/*}" -path "$path" -prune -exec rm -rf {} + 2>/dev/null
     done
-
-    echo "Browser data deletion complete."
 }
-
-# Helper function for error handling
-log_error() {
-    echo "ERROR: $1" >&2
-    exit 1
-}
-
-# Helper function for success messages
-log_success() {
-    echo "SUCCESS: $1"
-}
-
 
 # Function to handle SSH setup
 setup_ssh() {
@@ -279,17 +260,13 @@ setup_ssh() {
     read -p "Press [Enter] after adding the key to GitHub..."
     
     # Clone repository
-    echo "Cloning repository..."
     GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
-    log_success "SSH setup and repository clone complete"
 }
 
 # Function to clean SSH
 cleanup_ssh() {
-    echo "Cleaning up SSH..."
     ssh-add -d "$HOME/.ssh/id_ed25519" 2>/dev/null
     rm -f "$HOME/.ssh/id_ed25519" "$HOME/.ssh/id_ed25519.pub" 2>/dev/null
-    log_success "SSH cleanup complete"
 }
 
 set_wallpaper() {
@@ -303,7 +280,6 @@ set_wallpaper() {
         mkdir -p "$DEST_FOLDER"
 
         # Download the image with optimized curl command
-        echo "Downloading wallpaper..."
         if curl -L \
             -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
             -H "Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8" \
@@ -314,15 +290,10 @@ set_wallpaper() {
 
             # Verify the download was successful
             if [ -f "$WALLPAPER_PATH" ] && [ -s "$WALLPAPER_PATH" ]; then
-                echo "Download completed successfully"
-
                 # Set the wallpaper for both light and dark themes
                 gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER"
                 gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER_PATH"
                 gsettings set org.gnome.desktop.background picture-options 'scaled'
-
-                echo "✓ Wallpaper has been set successfully!"
-                echo "Location: $WALLPAPER_PATH"
             else
                 echo "❌ Error: Download failed or file is empty"
             fi
@@ -334,8 +305,6 @@ set_wallpaper() {
 
 # Function to delete the script itself
 self_delete() {
-    echo "Deleting the script and the folder..."
-    
     # Save the path to the script
     local script_path="$0"
     
@@ -344,16 +313,16 @@ self_delete() {
     
     # Delete the folder and its contents
     if rm -rf "$folder_path"; then
-        log_success "Folder deleted successfully"
+        echo "Folder deleted successfully"
     else
-        log_error "Failed to delete folder"
+        echo "Failed to delete folder"
     fi
     
     # Delete the script
     if rm -f "$script_path"; then
-        log_success "Script deleted successfully"
+        echo "Script deleted successfully"
     else
-        log_error "Failed to delete script"
+        echo "Failed to delete script"
     fi
 }
 
@@ -398,10 +367,8 @@ obsidian() {
     wait $setup_pid
     
     if [ $? -eq 0 ]; then
-        echo "Installation completed. Launching Obsidian..."
         # Launch Obsidian with complete detachment
         nohup "$DESTINATION/obsidian-folder/obsidian" >/dev/null 2>&1 & disown
-        echo "Obsidian launched successfully!"
     else
         echo "An error occurred during installation."
         exit 1
@@ -421,7 +388,6 @@ cursor() {
     (
         # Download the file
         if ! curl -L "$URL" -o "$FILENAME" > /dev/null 2>&1 ; then
-            echo "Download failed!"
             exit 1
         fi
 
@@ -429,7 +395,6 @@ cursor() {
 
         # Extract AppImage
         if ! ./"$FILENAME" --appimage-extract >/dev/null 2>&1; then
-            echo "Extraction failed!"
             exit 1
         fi
 
@@ -448,10 +413,8 @@ cursor() {
     wait $setup_pid
     
     if [ $? -eq 0 ]; then
-        echo "Installation completed. Launching Cursor..."
         # Launch Cursor with complete detachment
         nohup "$DESTINATION/cursor-folder/AppRun" >/dev/null 2>&1 & disown
-        echo "Cursor launched successfully!"
     else
         echo "An error occurred during installation."
         exit 1
@@ -477,21 +440,15 @@ setup_nvm() {
 }
 
 libraries() {
-
     pip install kivy
-    echo "Kivy installed!"
-
+    pip install selenium &> /dev/null
+    pip install undetected-chromedriver &> /dev/null
 }
 
 set_dark_theme() {
-
-    echo "Setting dark  theme for Ubuntu"
-
     # Set the dark them for the system
     gsettings set org.gnome.desktop.interface gtk-theme "Yaru-dark"
     gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
-
-    echo "Dark theme has been applied successfully!"
 }
 
 cleanup_folder() {
@@ -502,8 +459,6 @@ cleanup_folder() {
 
     # Delete everything except the script itself
     find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" ! -name "jarvis" ! -name "menu.py" ! -name "img" ! -name "jarvis-menu.png" ! -name "happy_jarvis.py"  -delete
-
-    echo "All files and folders in $script_dir except $script_name have been deleted."
 }
 
 # Main script execution
@@ -545,17 +500,14 @@ case "$1" in
                 
                 # Clone repository only if GITHUB_REPO is defined
                 if [ -n "$GITHUB_REPO" ]; then
-                    echo "Cloning repository..."
                     GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
                     log_success "Repository cloned successfully"
                 else
-                    echo "Skipping repository clone: GITHUB_REPO not defined"
                 fi
                 
                 log_success "SSH setup complete"
             fi
         else
-            echo "Skipping Git and SSH setup: GitHub credentials not provided"
         fi
         
         # Wait for background processes to complete
@@ -586,19 +538,15 @@ case "$1" in
         # Clear terminal history
         history -c && history -w
 
-        log_success "Protocolo de despedida completado exitosamente"
         sleep 10 && shutdown now
         self_delete
         ;;
 
     "happy")
-        pip install selenium &> /dev/null
-        pip install undetected-chromedriver &> /dev/null
-	    chmod +x happy_jarvis.py
-	    echo "Happy mode activated"
-	    ./python_scripts/happy_jarvis.py || log_error "Error"
-	    echo "Lito a mimir"
-	    ;;
+	chmod +x happy_jarvis.py
+	echo "Happy mode activated"
+	./python_scripts/happy_jarvis.py
+	;;
 
     *)
         echo "Usage: $0 {hello|obsidian|bye|review|happy}"
@@ -606,6 +554,7 @@ case "$1" in
         echo "  obsidian      - Download Obsidian app, then open it"
         echo "  bye           - Cleanup all data and configurations"
         echo "  happy         - Run the Python script (review.py)"
+	echo "  cursor        - Download Cursor app, then open it"
         exit 1        
 	;;
 esac
