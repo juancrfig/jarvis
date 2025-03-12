@@ -5,18 +5,18 @@
     # --- Configuración de GitHub ---
 
 # Tu correo electrónico asociado a GitHub:
-GITHUB_EMAIL=""
+GITHUB_EMAIL="juancrfig@gmail.com"
 
 # Tu nombre de usuario en GitHub:
-GITHUB_USERNAME=""
+GITHUB_USERNAME="juancrfig"
 
 # Enlace SSH del repositorio que deseas clonar por defecto:
-GITHUB_REPO=""
+GITHUB_REPO="https://github.com/juancrfig/notes"
 
   # --- Personalización del PC ---
 
 # URL de la imagen que se usará como fondo de pantalla.  
-IMAGE_URL=""
+IMAGE_URL="https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?cs=srgbIMAGE_URL=""dl=pexels-philippedonn-1169754.jpgIMAGE_URL=""fm=jpg"
 
   # --- Personalización de la terminal ---
 
@@ -51,13 +51,13 @@ check_variables() {
     if [ -z "$GITHUB_REPO" ]; then
         read -p "There's no defined default Github repository. Please enter one: " GITHUB_REPO
         # Update the script file to include the new value
-        sed -i.bak -E "s/^(GITHUB_REPO=).*/\1\"$GITHUB_REPO\"/" "$0"
+        sed -i.bak -E "s|^(GITHUB_REPO=).*|\1\"$GITHUB_REPO\"|" "$0"
     fi
 
     if [ -z "$IMAGE_URL" ]; then
         read -p "There's no defined image URL. Please enter one: " IMAGE_URL
         # Update the script file to include the new value
-        sed -i.bak -E "s/^(IMAGE_URL=).*/\1\"$IMAGE_URL\"/" "$0"
+        sed -i.bak -E "s|^(IMAGE_URL=).*|\1\"$IMAGE_URL\"|" "$0"
     fi
 
 }
