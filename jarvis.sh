@@ -5,18 +5,18 @@
     # --- Configuración de GitHub ---
 
 # Tu correo electrónico asociado a GitHub:
-GITHUB_EMAIL="juancrfig@gmail.com"
+GITHUB_EMAIL=""
 
 # Tu nombre de usuario en GitHub:
-GITHUB_USERNAME="juancrfig"
+GITHUB_USERNAME=""
 
 # Enlace SSH del repositorio que deseas clonar por defecto:
-GITHUB_REPO="https://github.com/juancrfig/notes"
+GITHUB_REPO=""
 
   # --- Personalización del PC ---
 
 # URL de la imagen que se usará como fondo de pantalla.  
-IMAGE_URL="https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?cs=srgbIMAGE_URL=""dl=pexels-philippedonn-1169754.jpgIMAGE_URL=""fm=jpg"
+IMAGE_URL=""
 
   # --- Personalización de la terminal ---
 
