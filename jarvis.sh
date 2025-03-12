@@ -484,12 +484,12 @@ case "$1" in
             SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
             
             # Generate SSH key
-            ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || { log_error "Failed to generate SSH key"; }
+            ssh-keygen -t ed25519 -C "$GITHUB_EMAIL" -f "$SSH_KEY_PATH" -N "" || { echo "Failed to generate SSH key"; }
             
             if [ $? -eq 0 ]; then
                 # Start SSH agent and add key
                 eval "$(ssh-agent -s)"
-                ssh-add "$SSH_KEY_PATH" || { log_error "Failed to add SSH key to agent"; }
+                ssh-add "$SSH_KEY_PATH" || { echo "Failed to add SSH key to agent"; }
                 
                 # Display public key
                 echo -e "\nAdd this public key to GitHub (https://github.com/settings/keys):"
@@ -500,18 +500,18 @@ case "$1" in
                 
                 # Clone repository only if GITHUB_REPO is defined
                 if [ -n "$GITHUB_REPO" ]; then
-                    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
-                    log_success "Repository cloned successfully"
+                    GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || echo "Failed to clone repository"
+                    echo "Repository cloned successfully"
                 fi
                 
-                log_success "SSH setup complete"
+                echo "SSH setup complete"
             fi
         fi
         
         # Wait for background processes to complete
         wait
         
-        log_success "Protocolo de bienvenida completado exitosamente"
+        echo "Protocolo de bienvenida completado exitosamente"
         ;;
     "obsidian")
 	obsidian
