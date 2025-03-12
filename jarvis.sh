@@ -502,12 +502,10 @@ case "$1" in
                 if [ -n "$GITHUB_REPO" ]; then
                     GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git clone "$GITHUB_REPO" || log_error "Failed to clone repository"
                     log_success "Repository cloned successfully"
-                else
                 fi
                 
                 log_success "SSH setup complete"
             fi
-        else
         fi
         
         # Wait for background processes to complete
