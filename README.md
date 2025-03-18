@@ -16,7 +16,7 @@
 - 📦 **Instalación de Node.js**.
 - 🎨 **Personalización**: Modifica la estética de la terminal a tu gusto.
 - 🖼 **Cambio de fondo**: Ajusta el fondo de pantalla del computador.
-- 🤖 **Calificación automática**: Evalúa clases de Software Skills y Ser.
+- 🤖 **Calificación automática**: Evalúa todas las clases con caritas felices.
 - 📝 **Obsidian**: Descarga e inicia la aplicación (*ideal para apuntes en Markdown*).
 - 🗑 **Limpieza total**: Borra archivos, sesiones y rastros del usuario.
 - ⏳ **Apagado automático** del computador.
