@@ -461,56 +461,11 @@ cleanup_folder() {
     find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" ! -name "jarvis" ! -name "menu.py" ! -name "img" ! -name "jarvis-menu.png" ! -name "happy_jarvis.py"  -delete
 }
 
-set_netbeans_minimal() {
-    CONFIG_FILE="$HOME/.netbeans/18/config/Preferences/org/netbeans/core/windows.properties"
-
-    # Ensure the directory exists
-    mkdir -p "$(dirname "$CONFIG_FILE")"
-
-    # Remove previous configuration
-    rm -f "$CONFIG_FILE"
-
-    # Create new minimalistic configuration
-    cat <<EOF > "$CONFIG_FILE"
-# Use a dark theme (FlatLaf Dark)
-laf=FlatLaf Dark
-
-# Hide toolbars by default
-toolbars.visible=false
-
-# Use a clean font with comfortable size
-editor.font.family=JetBrains Mono
-editor.font.size=14
-
-# Remove excessive margins and gaps
-editor.margin.size=2
-
-# Disable splash screen for faster startup
-disable.splash.screen=true
-
-# Simplify tabs and reduce UI clutter
-tabs.closable=true
-tabs.compact=true
-
-# Hide status bar for distraction-free coding
-statusbar.visible=false
-
-# Hide project panel on startup (open manually if needed)
-project.panel.visible=false
-
-# Enable smooth scrolling
-editor.smooth.scrolling=true
-EOF
-
-    echo "✅ NetBeans configuration updated! Restart NetBeans to apply changes."
-}
-
 
 # Main script execution
 case "$1" in
     "hello")
 	check_variables
-    netBeans_config
         # Start tasks that don't depend on GitHub credentials in the background
         (set_dark_theme > /dev/null 2>&1 || true; echo "Dark theme set!") &
         (cleanup_folder > /dev/null 2>&1 || true; echo "Main folder cleaned up!") &
