@@ -1,35 +1,37 @@
 #!/bin/bash
 
-          # Variables Globales:
+          # Global Variables:
 
-    # --- Configuración de GitHub ---
 
-# Tu correo electrónico asociado a GitHub:
+    # --- GitHub Configuration ---
+
+# GitHub email:
 GITHUB_EMAIL=""
 
-# Tu nombre de usuario en GitHub:
+# Github username:
 GITHUB_USERNAME=""
 
-# Enlace SSH del repositorio que deseas clonar por defecto:
+# Repository's SSH link:
 GITHUB_REPO=""
 
-  # --- Personalización del PC ---
 
-# URL de la imagen que se usará como fondo de pantalla.  
+  # --- System Customization ---
+
+# Wallpaper URL  
 IMAGE_URL=""
 
-  # --- Personalización de la terminal ---
+  # --- Terminal Customization ---
 
-# Color de fondo de la terminal en formato RGB o hexadecimal(#):
+# Terminal's background color in RGB or hex(#) format:
 BACKGROUND_COLOR="#000000"
 
-# Nivel de transparencia del fondo de la terminal (0-100):
+# Terminal's transparency level (0-100):
 BACKGROUND_TRANSPARENCY_PERCENT=17
 
-# Tipo y tamaño de fuente para la terminal:
+# Font Style and Size:
 FONT="Liberation Mono 12"
 
-# Color del texto en la terminal en formato RGB o hexadecimal(#):
+# Terminal's Font Color  in RGB or hex format(#):
 FOREGROUND_COLOR="rgb(255,255,255)"
 
 
