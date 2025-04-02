@@ -3,6 +3,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+import random
 
 # Setup Chrome options
 chrome_options = webdriver.ChromeOptions()
@@ -42,18 +43,26 @@ while True:
     time.sleep(2)
     
     try:
-        # Find all elements that have the happy face icon classes
-        elements = driver.find_elements(By.CSS_SELECTOR, ".transition-all.ease-linear.duration-150.icon-happy-outline")
+        # List of possible face adjectives
+        face_adjectives = ["happy", "midhappy", "serious", "sad"]
+        
+        # Randomly select a face adjective for this iteration
+        selected_adjective = random.choice(face_adjectives)
+        print(f"Randomly selected face type: {selected_adjective}")
+        
+        # Find all elements with the selected face adjective
+        css_selector = f".transition-all.ease-linear.duration-150.icon-{selected_adjective}-outline"
+        elements = driver.find_elements(By.CSS_SELECTOR, css_selector)
         
         if elements:
-            print(f"Found {len(elements)} happy face elements. Clicking each one...")
+            print(f"Found {len(elements)} {selected_adjective} face elements. Clicking each one...")
             for element in elements:
                 element.click()
                 time.sleep(0.1)  # Small delay between clicks
         else:
-            print("No happy face elements found on this page.")
+            print(f"No {selected_adjective} face elements found on this page.")
     except Exception as e:
-        print(f"Error finding or clicking happy face elements: {e}")
+        print(f"Error finding or clicking face elements: {e}")
     
     # Click the final button to proceed (using the same selector as in the original script)
     try:
