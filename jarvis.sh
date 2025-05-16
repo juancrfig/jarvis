@@ -1,22 +1,8 @@
 #!/bin/bash
 
-          # Variables Globales:
-
-    # --- Configuración de GitHub ---
-
-# Tu correo electrónico asociado a GitHub:
 GITHUB_EMAIL=""
-
-# Tu nombre de usuario en GitHub:
 GITHUB_USERNAME=""
-
-# Enlace SSH del repositorio que deseas clonar por defecto:
 GITHUB_REPO=""
-
-  # --- Personalización del PC ---
-
-# URL de la imagen que se usará como fondo de pantalla.  
-IMAGE_URL=""
 
   # --- Personalización de la terminal ---
 
@@ -53,17 +39,6 @@ check_variables() {
         # Update the script file to include the new value
         sed -i.bak -E "s|^(GITHUB_REPO=).*|\1\"$GITHUB_REPO\"|" "$0"
     fi
-
-    if [ -z "$IMAGE_URL" ]; then
-        read -p "There's no defined image URL. Please enter one: " IMAGE_URL
-        # Update the script file to include the new value
-        sed -i.bak -E "s|^(IMAGE_URL=).*|\1\"$IMAGE_URL\"|" "$0"
-    fi
-
-}
-
-sql() {
-    mysql -u campus2023 -pcampus2023
 }
 
 # Spinner function that tracks a specific process
@@ -143,7 +118,6 @@ EOF
     reset
 }
 
-# Funcion para configurar Git
 configure_git() {
     git config --global user.name "$GITHUB_USERNAME"
     git config --global user.email "$GITHUB_EMAIL"
@@ -153,33 +127,6 @@ configure_git() {
     git config --global pull.rebase false
     git config --global core.autocrlf input
     git config --global core.abbrev 10
-}
-
-# Funcion para limpiar VS Code
-cleanup_vscode() {
-
-        # Kill VS Code processes
-        pkill -f "code" 2>/dev/null
-
-        # Force kill if still running
-        if pgrep -f "code" > /dev/null; then
-                pkill -9 -f "code"
-        fi
-
-    local vscode_paths=(
-        "$HOME/.config/Code"
-        "$HOME/.vscode"
-        "$HOME/.config/Code - OSS"
-        "$HOME/.local/share/code"
-        "$HOME/.local/share/code-oss"
-        "$HOME/.cache/code"
-        "$HOME/.cache/code-oss"
-        "$HOME/.vscode/extensions"
-    )
-    
-    for path in "${vscode_paths[@]}"; do
-        rm -rf "$path" 2>/dev/null
-    done
 }
 
 cleanup_browsers() {
@@ -269,109 +216,17 @@ cleanup_ssh() {
     rm -f "$HOME/.ssh/id_ed25519" "$HOME/.ssh/id_ed25519.pub" 2>/dev/null
 }
 
-set_wallpaper() {
-
-        # Configuration
-        DEST_FOLDER="$HOME/Pictures"
-        FILENAME="wallpaper.jpg"
-        WALLPAPER_PATH="$DEST_FOLDER/$FILENAME"
-
-        # Create wallpapers directory if it doesn't exist
-        mkdir -p "$DEST_FOLDER"
-
-        # Download the image with optimized curl command
-        if curl -L \
-            -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
-            -H "Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8" \
-            -H "Referer: https://uhdpaper.com/" \
-            --compressed \
-            -o "$WALLPAPER_PATH" \
-            "$IMAGE_URL"; then
-
-            # Verify the download was successful
-            if [ -f "$WALLPAPER_PATH" ] && [ -s "$WALLPAPER_PATH" ]; then
-                # Set the wallpaper for both light and dark themes
-                gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER"
-                gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER_PATH"
-                gsettings set org.gnome.desktop.background picture-options 'scaled'
-            else
-                echo "❌ Error: Download failed or file is empty"
-            fi
-        else
-            echo "❌ Error: Failed to download the image"
-        fi
-}
-
 
 # Function to delete the script itself
 self_delete() {
     # Save the path to the script
     local script_path="$0"
     
-    # Path to the folder to delete
-    local folder_path="/home/camper/Descargas/jarvis"
-    
-    # Delete the folder and its contents
-    if rm -rf "$folder_path"; then
-        echo "Folder deleted successfully"
-    else
-        echo "Failed to delete folder"
-    fi
-    
     # Delete the script
     if rm -f "$script_path"; then
         echo "Script deleted successfully"
     else
         echo "Failed to delete script"
-    fi
-}
-
-# Obsidian installation and launch function
-obsidian() {
-    local URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v1.7.7/Obsidian-1.7.7.AppImage"
-    local DESTINATION="$HOME/Descargas"
-    local FILENAME="Obsidian.AppImage"
-    
-    # Create destination directory if it doesn't exist
-    mkdir -p "$DESTINATION"
-    cd "$DESTINATION" || exit 1
-    
-    # Download and setup in a subshell with process tracking
-    (
-        # Download the file
-        if ! curl -L "$URL" -o "$FILENAME" > /dev/null 2>&1 ; then
-            echo "Download failed!"
-            exit 1
-        fi
-        
-        chmod +x "$FILENAME"
-        
-        # Extract AppImage
-        if ! ./"$FILENAME" --appimage-extract >/dev/null 2>&1; then
-            echo "Extraction failed!"
-            exit 1
-        fi
-        
-        rm "$FILENAME"
-        [[ -d obsidian-folder ]] && rm -rf obsidian-folder
-        mv squashfs-root obsidian-folder
-    ) &
-    
-    # Store background process PID
-    local setup_pid=$!
-    
-    # Show spinner while waiting for the setup
-    show_spinner $setup_pid "Downloading and setting up Obsidian..."
-    
-    # Wait for setup to complete
-    wait $setup_pid
-    
-    if [ $? -eq 0 ]; then
-        # Launch Obsidian with complete detachment
-        nohup "$DESTINATION/obsidian-folder/obsidian" >/dev/null 2>&1 & disown
-    else
-        echo "An error occurred during installation."
-        exit 1
     fi
 }
 
@@ -421,30 +276,6 @@ cursor() {
     fi
 }
 
-setup_nvm() {
-    # Install nvm
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-
-    # Set up NVM_DIR environment variable
-    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-
-    # Load nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-    # Check nvm version
-    nvm --version
-    nvm -v
-
-    # Install the latest version of Node.js
-    nvm install node
-}
-
-libraries() {
-    pip install kivy
-    pip install selenium &> /dev/null
-    pip install undetected-chromedriver &> /dev/null
-}
-
 set_dark_theme() {
     # Set the dark them for the system
     gsettings set org.gnome.desktop.interface gtk-theme "Yaru-dark"
@@ -458,23 +289,19 @@ cleanup_folder() {
     script_name=$(basename "$script_path")
 
     # Delete everything except the script itself
-    find /home/camper/Descargas -mindepth 1 ! -name "$script_name" ! -name "jarvis-master" ! -name "jarvis" ! -name "menu.py" ! -name "img" ! -name "jarvis-menu.png" ! -name "happy_jarvis.py"  -delete
+    find /home/camper/Descargas -mindepth 1 ! -name "$script_name"
 }
 
 
 # Main script execution
 case "$1" in
     "hello")
-	check_variables
+    	check_variables
         # Start tasks that don't depend on GitHub credentials in the background
         (set_dark_theme > /dev/null 2>&1 || true; echo "Dark theme set!") &
         (cleanup_folder > /dev/null 2>&1 || true; echo "Main folder cleaned up!") &
-        (set_wallpaper > /dev/null 2>&1 || true; echo "Wallpaper set!") &
         (customize_terminal > /dev/null 2>&1 || true; echo "Terminal aspect improved!") &
-        (cleanup_vscode > /dev/null 2>&1 || true; echo "Visual Studio Code previous configs erased!") &
         (xdg-settings set default-web-browser google-chrome.desktop || log_error "Failed to set the default browser" || true) &
-        (setup_nvm > /dev/null 2>&1 || true; echo "Node.js and nvm installed!" ) &
-        (libraries > /dev/null 2>&1 || true; echo "Python libraries installed!") &
         
         # Handle Git and SSH setup separately
         if [ -n "$GITHUB_USERNAME" ] && [ -n "$GITHUB_EMAIL" ]; then
@@ -514,9 +341,7 @@ case "$1" in
         
         echo "Protocolo de bienvenida completado exitosamente"
         ;;
-    "obsidian")
-	obsidian
-	;;
+
     "cursor")
         cursor
 	;;
@@ -526,8 +351,6 @@ case "$1" in
 
     "bye")
         cleanup_ssh 
-        cleanup_discord
-        cleanup_vscode
         cleanup_browsers
         cleanup_folder
 
@@ -540,20 +363,11 @@ case "$1" in
         sleep 10 && shutdown now
         self_delete
         ;;
-
-    "happy")
-	chmod +x happy_jarvis.py
-	echo "Happy mode activated"
-	./python_scripts/happy_jarvis.py
-	;;
-
     *)
-        echo "Usage: $0 {hello|obsidian|bye|review|happy}"
-        echo "  hello         - Initial setup (VS Code cleanup, Git config, Firefox default)"
-        echo "  obsidian      - Download Obsidian app, then open it"
+        echo "Usage: $0 {hello|bye}"
+        echo "  hello         - Initial setup"
         echo "  bye           - Cleanup all data and configurations"
-        echo "  happy         - Run the Python script (review.py)"
-	echo "  cursor        - Download Cursor app, then open it"
+	    echo "  cursor        - Download Cursor app, then open it"
         exit 1        
 	;;
 esac
