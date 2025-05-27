@@ -38,11 +38,6 @@ GITHUB_USERNAME="myUserName"
 # Enlace SSH del repositorio que deseas clonar por defecto:
 GITHUB_REPO="https://github.com/myUsername/lorem.git"
 
-  # --- Personalización del PC ---
-
-# URL de la imagen que se usará como fondo de pantalla.  
-IMAGE_URL="https://background.com/myBackground"
-
   # --- Personalización de la terminal ---
 
 # Color de fondo de la terminal en formato RGB o hexadecimal(#):
@@ -81,7 +76,6 @@ chmod +x jarvis.sh
 - 🌐 Configura Google Chrome como navegador predeterminado.
 - 🔑 Modifica `~/.gitconfig` con tus datos.
 - 🔗 Vincula GitHub mediante SSH.
-- 📦 Instala Node.js.
 
 ***
 
@@ -92,6 +86,7 @@ chmod +x jarvis.sh
 ```
 ✅ Funciones:
 - ❌ Elimina la llave SSH vinculada en el protocolo de bienvenida.
+- 🚪 Cierra sesión en VS Code.
 - 🔍 Borra datos de sesión en navegadores Firefox y Chrome.
 - 🗑 Elimina todos los archivos en la carpeta Descargas.
 - 🧑‍💻 Borra la información de `~/.gitconfig`.
