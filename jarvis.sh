@@ -18,8 +18,6 @@ FONT="Liberation Mono 12"
 # Color del texto en la terminal en formato RGB o hexadecimal(#):
 FOREGROUND_COLOR="rgb(255,255,255)"
 
-
-
 # Function to prompt the user for missing variables
 check_variables() {
     if [ -z "$GITHUB_EMAIL" ]; then
@@ -216,7 +214,6 @@ cleanup_ssh() {
     rm -f "$HOME/.ssh/id_ed25519" "$HOME/.ssh/id_ed25519.pub" 2>/dev/null
 }
 
-
 # Function to delete the script itself
 self_delete() {
     # Save the path to the script
@@ -292,7 +289,6 @@ cleanup_folder() {
     find /home/camper/Descargas -mindepth 1 ! -name "$script_name"
 }
 
-
 # Main script execution
 case "$1" in
     "hello")
@@ -360,15 +356,17 @@ case "$1" in
         # Clear terminal history
         history -c && history -w
 
+        # Ejecutar script de reinicio
+        REINICIO_SCRIPT="/home/camper/scriptReinicio.sh"
+        if [ -f "$REINICIO_SCRIPT" ]; then
+            echo "Ejecutando script de reinicio..."
+            chmod +x "$REINICIO_SCRIPT"
+            "$REINICIO_SCRIPT"
+        else
+            echo "El script de reinicio no existe en la ruta especificada."
+        fi
+
         sleep 10 && shutdown now
         self_delete
         ;;
-    *)
-        echo "Usage: $0 {hello|bye}"
-        echo "  hello         - Initial setup"
-        echo "  bye           - Cleanup all data and configurations"
-	    echo "  cursor        - Download Cursor app, then open it"
-        exit 1        
-	;;
 esac
-
